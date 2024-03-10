@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib
-import matplotlib import font_manager
+from matplotlib import font_manager
 import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime as dt
