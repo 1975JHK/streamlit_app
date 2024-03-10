@@ -148,6 +148,8 @@ def real_time_weather():
         temps.append(float(temp))
         humis.append(float(humi))
     # 날씨 정보 데이터 프레임으로 저장하기
+    names = ["Seoul", "Daejeon", "Daegu", "Pusan", "Kwangju", 
+             "Jeju", "Ulsan", "Incheon", "Suwon"]
     weather = pd.DataFrame(zip(names, skies, temps, humis), 
                         columns = ["City", "Sky", "Temp(℃)", "Humi(%)"])
     return weather
