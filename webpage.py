@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib
+import matplotlib import font_manager
 import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime as dt
@@ -10,7 +11,9 @@ from PIL import Image
 import time, requests, re
 
 # 2.시각화 기본 설정
-matplotlib.rcParams["font.family"] = "NanumGothic"
+font_path = "NanumGothic.ttf"
+font = font_manager.FontProperties(fname = font_path).get_name()
+matplotlib.rcParams["font.family"] = font
 matplotlib.rcParams["font.size"] = 7
 matplotlib.rcParams["axes.unicode_minus"] = False
 
