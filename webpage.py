@@ -11,7 +11,7 @@ from PIL import Image
 import time, requests, re
 
 # 2.시각화 기본 설정
-font_path = "batang.ttc"
+font_path = "NanumGothic.ttf"
 font = font_manager.FontProperties(fname = font_path).get_name()
 matplotlib.rcParams["font.family"] = font
 matplotlib.rcParams["font.size"] = 7
