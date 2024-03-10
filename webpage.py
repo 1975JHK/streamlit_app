@@ -149,7 +149,7 @@ def real_time_weather():
         humis.append(float(humi))
     # 날씨 정보 데이터 프레임으로 저장하기
     weather = pd.DataFrame(zip(names, skies, temps, humis), 
-                        columns = ["지역", "기상", "기온(℃)", "습도(%)"])
+                        columns = ["City", "Sky", "Temp(℃)", "Humi(%)"])
     return weather
 
 # 7-1. 날씨정보 테이블
@@ -188,4 +188,3 @@ if option == "RealTime Weather":
         st.write("**전국 주요 도시 {} 기상 정보**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
-        
