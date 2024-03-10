@@ -156,7 +156,7 @@ def real_time_weather():
 if option == "RealTime Weather":
     df = real_time_weather()
     now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
-if graph_btn:
+    if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         fig.set_facecolor("#2F2E2E")
         st.write("**전국 주요 도시 {} 온도/습도 정보**".format(now))
@@ -184,7 +184,7 @@ if graph_btn:
         ax.tick_params(axis = "both", colors = "white", labelsize = 10)
         ax2.tick_params(axis = "both", colors = "white", labelsize = 10)
         st.pyplot(fig)
-    elif table_btn or option == "RealTime Weather":
+    else:
         st.write("**전국 주요 도시 {} 기상 정보**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
