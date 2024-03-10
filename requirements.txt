@@ -5,6 +5,5 @@ matplotlib
 seaborn
 datetime
 pillow
-time
 requests
 re
