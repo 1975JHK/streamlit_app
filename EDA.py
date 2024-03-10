@@ -12,7 +12,3 @@ page_title = "EDA")
 st.title("Exploratory Data Analysis with Streamlit")
 st.header("First Web App with Streamlit")
 st.subheader("Date and Time : {}".format(dt.datetime.now().strftime("%y/%m/%d %H:%M)))
-
-
-# requirements.txt (필요한 패키지)
-streamlit
