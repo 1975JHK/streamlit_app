@@ -46,16 +46,16 @@ if option == "Introduction":
         con.write(word)
         con.write("\n")
         time.sleep(1.5)
-    image = Image.open("streamlit_app/good_logo.jpg")
+    image = Image.open("good_logo.jpg")
     con.image(image, use_column_width = True)
 
 
 # 6.주요 경제 지표
 if option == "Economic Indicators":
     file_paths = [
-    "streamlit_app/경제심리지수.csv",
-    "streamlit_app/소비자물가지수.csv",
-    "streamlit_app/주택매매가격지수.csv"]
+    "경제심리지수.csv",
+    "소비자물가지수.csv",
+    "주택매매가격지수.csv"]
     names = ["경제심리지수", "소비자물가지수", "주택매매가격지수"]
     for i, file in enumerate(file_paths):
         df_i = pd.read_csv(r"{}".format(file), index_col = 0).transpose()
