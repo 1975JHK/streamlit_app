@@ -10,7 +10,7 @@ from PIL import Image
 import time, requests, re
 
 # 2.시각화 기본 설정
-matplotlib.rcParams["font.family"] = "Malgun Gothic"
+matplotlib.rcParams["font.family"] = "NanumGothic"
 matplotlib.rcParams["font.size"] = 7
 matplotlib.rcParams["axes.unicode_minus"] = False
 
