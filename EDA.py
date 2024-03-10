@@ -11,4 +11,4 @@ page_title = "EDA")
 # 3.페이티 제목 및 Header
 st.title("Exploratory Data Analysis with Streamlit")
 st.header("First Web App with Streamlit")
-st.subheader("Date and Time : {}".format(dt.datetime.now().strftime("%y/%m/%d %H:%M)))
+st.subheader("Date and Time : {}".format(dt.datetime.now().strftime("%y/%m/%d %H:%M")))
