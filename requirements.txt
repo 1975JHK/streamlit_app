@@ -2,7 +2,6 @@ streamlit
 pandas
 numpy
 matplotlib
-matplotlib.pyplot
 seaborn
 datetime
 PIL.Image
