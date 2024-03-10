@@ -4,7 +4,7 @@ numpy
 matplotlib
 seaborn
 datetime
-PIL.Image
+PIL
 time
 requests
 re
