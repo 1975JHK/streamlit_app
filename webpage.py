@@ -156,16 +156,16 @@ def real_time_weather():
 if option == "RealTime Weather":
     df = real_time_weather()
     now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
-    if graph_btn:
+if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         fig.set_facecolor("#2F2E2E")
         st.write("**전국 주요 도시 {} 온도/습도 정보**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
-        ax.bar(x = df["지역"],height = df["기온(℃)"], color = "orange",
+        ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
                alpha = 1.0)
-        ax.set_ylabel("현재 기온(℃)", color = "white", size = 11)
-        ax.set_xlabel("지역(도시) 명칭", color = "white", size = 11)
+        ax.set_ylabel("Current Temp.(℃)", color = "white", size = 11)
+        ax.set_xlabel("Name of City", color = "white", size = 11)
         ax2 = ax.twinx()
         ax2 = plt.gca()
         ax.spines["right"].set_visible(False)
@@ -174,11 +174,11 @@ if option == "RealTime Weather":
         ax2.spines["right"].set_visible(False)
         ax2.spines["left"].set_visible(False)
         ax2.spines["top"].set_visible(False)
-        ax2.plot(df["지역"], df["습도(%)"], marker = "o", linewidth = 2.0,
+        ax2.plot(df["City"], df["Humi(%)"], marker = "o", linewidth = 2.0,
                  color = "green")
-        ax2.set_ylabel("현재 습도(%)", color = "white", size = 11)
-        ax.legend(["현재 기온(℃)"], loc = "upper right")
-        ax2.legend(["현재 습도(%)"], loc = "upper left")
+        ax2.set_ylabel("Current Humi(%)", color = "white", size = 11)
+        ax.legend(["Current Temp(℃)"], loc = "upper right")
+        ax2.legend(["Current Humi(%)"], loc = "upper left")
         ax.set_facecolor("#2F2E2E") #배경색
         ax.grid(True)
         ax.tick_params(axis = "both", colors = "white", labelsize = 10)
