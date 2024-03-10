@@ -72,7 +72,7 @@ if option == "Economic Indicators":
     col_names = df.columns
     colors = ["orange", "green", "steelblue"]
     
-    if table_btn or option == "Economic Indicators":
+    if table_btn:
         st.write("**한국 가계 경제 지표**")
         st.dataframe(data = df, hide_index = True,
                      width = 600, height = 550,
@@ -102,7 +102,10 @@ if option == "Economic Indicators":
         st.pyplot(fig)
     
     else:
-        st.error(":kiwifruit:테이블 혹은 시각화 버튼을 누르세요!")
+        st.write("**한국 가계 경제 지표**")
+        st.dataframe(data = df, hide_index = True,
+                     width = 600, height = 550,
+                     column_config={"year":st.column_config.NumberColumn(format="%d")})
 
 
 # 7. 실시간 날씨 정보
