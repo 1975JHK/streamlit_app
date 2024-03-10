@@ -59,7 +59,6 @@ if option == "Economic Indicators":
     "경제심리지수.csv",
     "소비자물가지수.csv",
     "주택매매가격지수.csv"]
-    names = ["경제심리지수", "소비자물가지수", "주택매매가격지수"]
     names = ["Economic Sentiment Index", "Consumer Price Index", 
              "House Price Index"]
     for i, file in enumerate(file_paths):
