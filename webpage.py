@@ -60,6 +60,8 @@ if option == "Economic Indicators":
     "소비자물가지수.csv",
     "주택매매가격지수.csv"]
     names = ["경제심리지수", "소비자물가지수", "주택매매가격지수"]
+    names = ["Economic Sentiment Index", "Consumer Price Index", 
+             "House Price Index"]
     for i, file in enumerate(file_paths):
         df_i = pd.read_csv(r"{}".format(file), index_col = 0).transpose()
         df_i = df_i.iloc[3:, :]
@@ -89,7 +91,7 @@ if option == "Economic Indicators":
             plt.plot(df["Month"], df[name], marker = "o",
                     color = colors[i], label = name, markersize = 3.5,
                     linewidth = 1.5)
-        plt.legend(loc = "upper left")
+        plt.legend(loc = "upper left", fontsize = 10)
         plt.xlabel("Month", fontdict = {"weight":"bold", "size":11, "color":"white"})
         plt.ylabel("Index", fontdict = {"weight":"bold", "size":11, "color":"white"})
         plt.gca().spines["top"].set_visible(False)
