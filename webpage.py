@@ -39,7 +39,7 @@ with st.sidebar:
 if option == "Introduction":
     history = [
     "JH DataLab은...",
-    ":seedling: 데이터 분석 전문 회사입니다.",
+    ":seedling: 데이터 분석 전문 Service를 제공합니다.",
     ":palm_tree: 복잡 다단한 현상의 이해와 일상의 의사결정에 불확실을 줄여드립니다.",
     ":evergreen_tree: 분석 내용은 시각화 도구를 이용하여 당신이 쉽게 이해하도록 돕겠습니다.",
     ":deciduous_tree: 수학, 통계, 머신러닝 및 Big Data 분석에 이르는 다양한 분야의 도구를 사용합니다."]
