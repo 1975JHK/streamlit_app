@@ -12,9 +12,7 @@ import time, requests, re
 from scipy.stats import norm
 
 # 2.시각화 기본 설정
-font_path = "NanumGothic.ttf"
-font = font_manager.FontProperties(fname = font_path).get_name()
-rc('font', family=font)
+matplotlib.rcParams["font.family"] = "Malgun Gothic"
 matplotlib.rcParams["font.size"] = 7
 matplotlib.rcParams["axes.unicode_minus"] = False
 
