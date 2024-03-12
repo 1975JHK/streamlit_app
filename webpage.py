@@ -53,7 +53,7 @@ if option == "Introduction":
     ":palm_tree: 복잡 다단한 현상의 이해와 일상의 의사결정에 불확실을 줄여드립니다.",
     ":evergreen_tree: 분석 내용은 시각화 도구를 이용하여 당신이 쉽게 이해하도록 돕겠습니다.",
     ":deciduous_tree: 수학, 통계, 머신러닝 및 Big Data 분석에 이르는 다양한 분야의 도구를 사용합니다."]
-    st.subheader("**We will help you to make your works :green[simple] and :green[easy].**", divider = "gray")
+    st.subheader("**We will help you to make your works :green[simple] and :green[easy].**")
     con = st.container(border = True)
     for word in history:
         con.write(word)
