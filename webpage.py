@@ -115,9 +115,9 @@ if option == "Korean Body Shape":
         plt.vlines(x = your_height, ymin = 0.0, ymax = 0.1, colors = "red") # score값을 나타내는 수직선 생성
         plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True)                         # 정규분포값으로 Histogram 생성
         plt.grid(True)                                                # 그래프에 grid 생성
-        plt.text(x = your_height, y = 0.065, s = "신장:{}cm".format(your_height), # score값을 그래프에 출력
+        plt.text(x = your_height, y = 0.065, s = "My Height:{}cm".format(your_height), # score값을 그래프에 출력
                 color = "white", fontdict={"style":"italic", "size":12})
-        plt.text(x = your_height, y = 0.060, s = "나의 신장은 상위:{}%".format(prob), # score값의 상위 누적 확률 출력
+        plt.text(x = your_height, y = 0.060, s = "My height from the top:{}%".format(prob), # score값의 상위 누적 확률 출력
                 color = "white", fontdict={"style":"italic", "size":12})
         plt.gca().set_facecolor("#2F2E2E")
         plt.xlim((mean-20, mean+20))
