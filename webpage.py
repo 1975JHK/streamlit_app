@@ -60,17 +60,20 @@ if option == "Korean Body Shape":
     if graph_btn:
         st.write("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
         fig = plt.figure(figsize = (8, 6))
+        fig.set_facecolor("#2F2E2E")
         sns.barplot(data = df_body, x = "age", y = "mean",
                     hue = "gender", alpha = 0.8)
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
-        plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"black"})
-        plt.ylabel("Height(mm)",fontdict = {"weight":"bold", "size":11})
+        plt.gca().spines["bottom"].set_visible(False)
+        plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"white"})
+        plt.ylabel("Height(mm)",fontdict = {"weight":"bold", "size":11, "color":"white"})
         plt.legend(loc = "upper right", prop = {"size":12})
         plt.grid(True)
         plt.ylim(150, 182)
-        plt.tick_params(axis = "both", labelsize = 10)
+        plt.tick_params(axis = "both", labelsize = 10, colors = "white")
+        plt.gca().set_facecolor("#2F2E2E")
         st.pyplot(fig)
     else:
         st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
@@ -78,7 +81,7 @@ if option == "Korean Body Shape":
                      use_container_width = True)
 
 
-# 6.주요 경제 지표
+# 7.주요 경제 지표
 if option == "Economic Indicators":
     file_paths = [
     "경제심리지수.csv",
@@ -137,8 +140,8 @@ if option == "Economic Indicators":
                      column_config={"year":st.column_config.NumberColumn(format="%d")})
 
 
-# 7. 실시간 날씨 정보
-# 7-1.실시간 기상정보 크롤링
+# 8. 실시간 날씨 정보
+# 8-1.실시간 기상정보 크롤링
 def real_time_weather():
     # 대한민국 주요 지역 URL
     urls = [
@@ -179,7 +182,7 @@ def real_time_weather():
                         columns = ["City", "Sky", "Temp(℃)", "Humi(%)"])
     return weather
 
-# 7-1. 날씨정보 테이블
+# 8-2. 날씨정보 테이블
 if option == "RealTime Weather":
     df = real_time_weather()
     now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
