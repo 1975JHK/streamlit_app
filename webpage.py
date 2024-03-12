@@ -29,6 +29,7 @@ st.set_page_config(
 with st.sidebar:
     option = st.selectbox(label = "**Choose One To Know:**",
                           options = ["Introduction",
+                                     "Korean Body Shape",
                                      "Economic Indicators",
                                      "RealTime Weather"])
     table_btn = st.button(label = "데이터 테이블")
@@ -51,6 +52,30 @@ if option == "Introduction":
         time.sleep(1.5)
     image = Image.open("good_logo.jpg")
     con.image(image, use_column_width = True)
+
+# 6.한국인 체형
+if option == "Korean Body Shape":
+    df_body = pd.read_excel(r"G:\streamlit\mypage\height.xlsx", sheet_name = "height")
+
+    if graph_btn:
+        st.write("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
+        fig = plt.figure(figsize = (8, 6))
+        sns.barplot(data = df_body, x = "age", y = "mean",
+                    hue = "gender", alpha = 0.8)
+        plt.gca().spines["top"].set_visible(False)
+        plt.gca().spines["left"].set_visible(False)
+        plt.gca().spines["right"].set_visible(False)
+        plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"black"})
+        plt.ylabel("Height(mm)",fontdict = {"weight":"bold", "size":11})
+        plt.legend(loc = "upper right", prop = {"size":12})
+        plt.grid(True)
+        plt.ylim(150, 180)
+        plt.tick_params(axis = "both", labelsize = 10)
+        st.pyplot(fig)
+    else:
+        st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
+        st.dataframe(data = df_body, hide_index = True,
+                     use_container_width = True)
 
 
 # 6.주요 경제 지표
