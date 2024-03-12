@@ -9,7 +9,7 @@ import seaborn as sns
 import datetime as dt
 from PIL import Image
 import time, requests, re
-import openxl
+import openpyxl
 
 # 2.시각화 기본 설정
 font_path = "NanumGothic.ttf"
