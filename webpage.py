@@ -129,12 +129,7 @@ if option == "Korean Body Shape":
         plt.gca().spines["left"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
         st.pyplot(fig)     
-
-
-    else:
-        st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
-        st.dataframe(data = df_body, hide_index = True,
-                     use_container_width = True)
+        
     else:
         st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
         st.dataframe(data = df_body, hide_index = True,
