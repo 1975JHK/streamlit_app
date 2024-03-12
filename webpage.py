@@ -69,7 +69,7 @@ if option == "Korean Body Shape":
         plt.ylabel("Height(mm)",fontdict = {"weight":"bold", "size":11})
         plt.legend(loc = "upper right", prop = {"size":12})
         plt.grid(True)
-        plt.ylim(150, 180)
+        plt.ylim(150, 182)
         plt.tick_params(axis = "both", labelsize = 10)
         st.pyplot(fig)
     else:
