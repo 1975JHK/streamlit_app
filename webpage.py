@@ -55,7 +55,7 @@ if option == "Introduction":
 
 # 6.한국인 체형
 if option == "Korean Body Shape":
-    df_body = pd.read_excel("height.xlsx", sheet_name = "height")
+    df_body = pd.read_csv("height.csv")
 
     if graph_btn:
         st.write("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
