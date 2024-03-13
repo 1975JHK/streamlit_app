@@ -75,7 +75,7 @@ if option == "Korean Body Shape":
         plt.gca().spines["right"].set_visible(False)
         plt.gca().spines["bottom"].set_visible(False)
         plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"white"})
-        plt.ylabel("Height(mm)",fontdict = {"weight":"bold", "size":11, "color":"white"})
+        plt.ylabel("Height(cm)",fontdict = {"weight":"bold", "size":11, "color":"white"})
         plt.legend(loc = "upper right", prop = {"size":12})
         plt.grid(True)
         plt.ylim(150, 182)
