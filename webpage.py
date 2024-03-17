@@ -204,7 +204,7 @@ if option == "RealTime Weather":
         df = wt.real_time_weather()
         df.to_csv("real_time_weather.csv")
     now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
-    df = pd.read_csv(r"G:\streamlit\mypage\real_time_weather.csv")
+    df = pd.read_csv("real_time_weather.csv")
     df = df.iloc[0:, 1:]
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
