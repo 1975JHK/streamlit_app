@@ -10,6 +10,7 @@ import datetime as dt
 from PIL import Image
 import time, requests, re
 from scipy.stats import norm
+from Weather import Weather
 
 # 2.시각화 기본 설정
 matplotlib.rcParams["font.family"] = "Malgun Gothic"
@@ -195,51 +196,16 @@ if option == "Economic Indicators":
 
 
 # 8. 실시간 날씨 정보
-# 8-1.실시간 기상정보 크롤링
-def real_time_weather():
-    # 대한민국 주요 지역 URL
-    urls = [
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=1168052100",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=3023052000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=2726067000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=2611057000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=2611057000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=5013025300",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=3114056000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=2817770000",
-    "https://www.kma.go.kr/w/rss/dfs/hr1-forecast.do?zone=4111366200"]
-
-    # 대한민국 주요 지역 명칭
-    names = ["서울", "대전", "대구", "부산", "광주", "제주", "울산", "인천", "수원"]
-
-    # 기상 상태, 기온 및 습도 저장을 위한 빈 리스트 생성
-    skies = []
-    temps = []
-    humis = []
-
-    # 주요 지역별 기상 정보 읽어 와서 출력 및 저장하기
-    for i, url in enumerate(urls):
-        # 기상청 RSS URL(주소)에서 html 가져오기
-        response = requests.get(url)
-        # 읽어온 html에서 하늘상태/기온/습도만 추출하기
-        wfor = re.findall("<wfKor>(.+)</wfKor>", response.text)[0]
-        temp = re.findall("<temp>(.+)</temp>", response.text)[0]
-        humi = re.findall("<reh>(.+)</reh>", response.text)[0]
-        # 날씨 정보 저장하기 
-        skies.append(wfor)
-        temps.append(float(temp))
-        humis.append(float(humi))
-    # 날씨 정보 데이터 프레임으로 저장하기
-    names = ["Seoul", "Daejeon", "Daegu", "Pusan", "Kwangju", 
-             "Jeju", "Ulsan", "Incheon", "Suwon"]
-    weather = pd.DataFrame(zip(names, skies, temps, humis), 
-                        columns = ["City", "Sky", "Temp(℃)", "Humi(%)"])
-    return weather
-
-# 8-2. 날씨정보 테이블
 if option == "RealTime Weather":
-    df = real_time_weather()
+    # 8-1.실시간 기상정보 크롤링
+    update_weather = st.button("기상정보 Update")
+    if update_weather:
+        wt = Weather()
+        df = wt.real_time_weather()
+        df.to_csv("real_time_weather.csv")
     now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
+    df = pd.read_csv(r"G:\streamlit\mypage\real_time_weather.csv")
+    df = df.iloc[0:, 1:]
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         fig.set_facecolor("#2F2E2E")
@@ -268,6 +234,10 @@ if option == "RealTime Weather":
         ax.tick_params(axis = "both", colors = "white", labelsize = 10)
         ax2.tick_params(axis = "both", colors = "white", labelsize = 10)
         st.pyplot(fig)
+    elif table_btn:
+        st.write("**전국 주요 도시 {} 기상 정보**".format(now))
+        st.dataframe(data = df, use_container_width = True,
+                    hide_index = True)
     else:
         st.write("**전국 주요 도시 {} 기상 정보**".format(now))
         st.dataframe(data = df, use_container_width = True,
