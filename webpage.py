@@ -75,10 +75,10 @@ if option == "예제1:Korean Body Shape":
         for i, value in enumerate(df_body["mean"]):
             if i <= 4:
                 plt.text(x = i-0.35, y = value,
-                         s = str(value))
+                         s = str(value), fontdict = {"weight":"bold", "size":11})
             elif i > 4:
                 plt.text(x = i-4.95, y = value,
-                         s = str(value))
+                         s = str(value), fontdict = {"weight":"bold", "size":11})
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
