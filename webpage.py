@@ -68,21 +68,26 @@ if option == "예제1:Korean Body Shape":
 
     if graph_btn:
         st.write("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
-        fig = plt.figure(figsize = (8, 6))
-        # fig.set_facecolor("#2F2E2E")
         sns.barplot(data = df_body, x = "age", y = "mean",
                     hue = "gender", alpha = 0.8)
+        for i, value in enumerate(df_body["mean"]):
+            if i <= 4:
+                plt.text(x = i-0.35, y = value,
+                         s = str(value))
+            elif i > 4:
+                plt.text(x = i-4.95, y = value,
+                         s = str(value))
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
         plt.gca().spines["bottom"].set_visible(False)
-        plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"white"})
-        plt.ylabel("Height(cm)",fontdict = {"weight":"bold", "size":11, "color":"white"})
+        plt.xlabel("Age", fontdict = {"weight":"bold", "size":11, "color":"black"})
+        plt.ylabel("Height(cm)",fontdict = {"weight":"bold", "size":11, "color":"black"})
         plt.legend(loc = "upper right", prop = {"size":12})
         plt.grid(True)
         plt.ylim(150, 182)
-        plt.tick_params(axis = "both", labelsize = 10, colors = "white")
-        plt.gca().set_facecolor("#2F2E2E")
+        plt.tick_params(axis = "both", labelsize = 10, colors = "black")
+        # plt.gca().set_facecolor("#2F2E2E")
         st.pyplot(fig)
         
     elif prob_btn:
