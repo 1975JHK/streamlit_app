@@ -35,7 +35,8 @@ with st.sidebar:
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
     st.write("---")
-    st.write("신체정보입력")
+    st.write("당신의 키는 상위 몇% 수준일까요?")
+    st.write("신체정보를 입력해서 알아보세요!")
     your_gender = st.selectbox(label = "성별 선택:", options = ["male", "female"],
                                index = 0)
     your_age = st.number_input("연령(나이) 입력", 
