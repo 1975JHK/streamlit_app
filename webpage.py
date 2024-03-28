@@ -174,24 +174,24 @@ if option == "예제2:Economic Indicators":
     
     elif graph_btn:
         fig = plt.figure(figsize = (8, 6))
-        fig.set_facecolor("#2F2E2E")
+        # fig.set_facecolor("#2F2E2E")
         st.write("**월별 가계 경제 지표 추이**")
         for i, name in enumerate(col_names[1:4]):
             plt.plot(df["Month"], df[name], marker = "o",
-                    color = colors[i], label = name, markersize = 3.5,
-                    linewidth = 1.5)
+                    color = colors[i], label = name, markersize = 5.0,
+                    linewidth = 2.0)
         plt.legend(loc = "upper left", fontsize = 10)
-        plt.xlabel("Month", fontdict = {"weight":"bold", "size":11, "color":"white"})
-        plt.ylabel("Index", fontdict = {"weight":"bold", "size":11, "color":"white"})
+        plt.xlabel("Month", fontdict = {"weight":"bold", "size":11, "color":"black"})
+        plt.ylabel("Index", fontdict = {"weight":"bold", "size":11, "color":"black"})
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
         plt.gca().spines["bottom"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
         plt.ylim(85.0, 115.0)
-        plt.yticks(color = "white", size = 9)
-        plt.xticks(np.arange(0, df.shape[0], step = 2), color = "white",
+        plt.yticks(color = "black", size = 9)
+        plt.xticks(np.arange(0, df.shape[0], step = 2), color = "black",
                    rotation = 45, size = 9)
-        plt.gca().set_facecolor("#2F2E2E") #배경색
+        # plt.gca().set_facecolor("#2F2E2E") #배경색
         plt.grid(True)
         st.pyplot(fig)
     
