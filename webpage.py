@@ -92,57 +92,56 @@ if option == "예제1:Korean Body Shape":
         plt.tick_params(axis = "both", labelsize = 10, colors = "black")
         # plt.gca().set_facecolor("#2F2E2E")
         st.pyplot(fig)
-        
-    elif prob_btn:
-        if your_age < 30:
-            selected = df_body[(df_body["age"] == 20)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 30 <= your_age < 40 :
-            selected = df_body[(df_body["age"] == 30)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 40 <= your_age < 50 :
-            selected = df_body[(df_body["age"] == 40)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 50 <= your_age < 60 :
-            selected = df_body[(df_body["age"] == 50)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-            
-        y = np.random.normal(mean, std, 10000)   # mean, stdev값을 받아서 10000개의 정규분포 난수 생성
-        x = np.linspace(start = np.min(y), stop = np.max(y), num = 1000) # y값의 최대/최소값 범위에서 1000개 등간격 숫자 생성
-        y1 = (1 / np.sqrt(2 * np.pi * std**2)) * np.exp(-(x-mean)**2 / (2 * std**2)) # 정규분포 곡선 생성
-        prob = round((1-norm.cdf(x = your_height, loc = mean, scale = std))*100, 1) # 정규분포에서 score값 이상의 누적확률 계산 
-         
-        st.write("당신의 키는 상위 몇%일까?")
-        fig = plt.figure(figsize = (8, 6))   # 그래프 객체 fig 생성 : streamlit에서는 명시적으로 생성해야 함
-        # fig.set_facecolor("#2F2E2E")
-        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) # 정규분포 곡선 작성
-        plt.vlines(x = your_height, ymin = 0.0, ymax = 0.1, colors = "red") # score값을 나타내는 수직선 생성
-        plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True)                         # 정규분포값으로 Histogram 생성
-        plt.grid(True)                                                # 그래프에 grid 생성
-        plt.text(x = your_height, y = 0.065, s = "My Height:{}cm".format(your_height), # score값을 그래프에 출력
-                color = "black", fontdict={"style":"italic", "size":12})
-        plt.text(x = your_height, y = 0.060, s = "My height from the top:{}%".format(prob), # score값의 상위 누적 확률 출력
-                color = "black", fontdict={"style":"italic", "size":12})
-        # plt.gca().set_facecolor("#2F2E2E")
-        plt.xlim((mean-20, mean+20))
-        plt.xlabel("Height(cm)", color = "black", fontdict={"size":11})
-        plt.ylabel("Probability", color = "black", fontdict={"size":11})
-        plt.yticks(color = "black", size = 9)
-        plt.xticks(color = "black", size = 9)
-        plt.gca().spines["bottom"].set_visible(False)
-        plt.gca().spines["top"].set_visible(False)
-        plt.gca().spines["left"].set_visible(False)
-        plt.gca().spines["right"].set_visible(False)
-        st.pyplot(fig)     
-        
     else:
         st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
         st.dataframe(data = df_body, hide_index = True,
                      use_container_width = True)
+if prob_btn:
+    if your_age < 30:
+        selected = df_body[(df_body["age"] == 20)&(df_body["gender"] == your_gender)]
+        mean = selected.iloc[0, 2]
+        std = selected.iloc[0, 3]
+    elif 30 <= your_age < 40 :
+        selected = df_body[(df_body["age"] == 30)&(df_body["gender"] == your_gender)]
+        mean = selected.iloc[0, 2]
+        std = selected.iloc[0, 3]
+    elif 40 <= your_age < 50 :
+        selected = df_body[(df_body["age"] == 40)&(df_body["gender"] == your_gender)]
+        mean = selected.iloc[0, 2]
+        std = selected.iloc[0, 3]
+    elif 50 <= your_age < 60 :
+        selected = df_body[(df_body["age"] == 50)&(df_body["gender"] == your_gender)]
+        mean = selected.iloc[0, 2]
+        std = selected.iloc[0, 3]
+        
+    y = np.random.normal(mean, std, 10000)   # mean, stdev값을 받아서 10000개의 정규분포 난수 생성
+    x = np.linspace(start = np.min(y), stop = np.max(y), num = 1000) # y값의 최대/최소값 범위에서 1000개 등간격 숫자 생성
+    y1 = (1 / np.sqrt(2 * np.pi * std**2)) * np.exp(-(x-mean)**2 / (2 * std**2)) # 정규분포 곡선 생성
+    prob = round((1-norm.cdf(x = your_height, loc = mean, scale = std))*100, 1) # 정규분포에서 score값 이상의 누적확률 계산 
+     
+    st.write("당신의 키는 상위 몇%일까?")
+    fig = plt.figure(figsize = (8, 6))   # 그래프 객체 fig 생성 : streamlit에서는 명시적으로 생성해야 함
+    # fig.set_facecolor("#2F2E2E")
+    plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) # 정규분포 곡선 작성
+    plt.vlines(x = your_height, ymin = 0.0, ymax = 0.1, colors = "red") # score값을 나타내는 수직선 생성
+    plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True)                         # 정규분포값으로 Histogram 생성
+    plt.grid(True)                                                # 그래프에 grid 생성
+    plt.text(x = your_height, y = 0.065, s = "My Height:{}cm".format(your_height), # score값을 그래프에 출력
+            color = "black", fontdict={"style":"italic", "size":12})
+    plt.text(x = your_height, y = 0.060, s = "My height from the top:{}%".format(prob), # score값의 상위 누적 확률 출력
+            color = "black", fontdict={"style":"italic", "size":12})
+    # plt.gca().set_facecolor("#2F2E2E")
+    plt.xlim((mean-20, mean+20))
+    plt.xlabel("Height(cm)", color = "black", fontdict={"size":11})
+    plt.ylabel("Probability", color = "black", fontdict={"size":11})
+    plt.yticks(color = "black", size = 9)
+    plt.xticks(color = "black", size = 9)
+    plt.gca().spines["bottom"].set_visible(False)
+    plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.gca().spines["right"].set_visible(False)
+    st.pyplot(fig)     
+        
 
 
 # 7.주요 경제 지표
