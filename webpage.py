@@ -215,14 +215,14 @@ if option == "예제3:RealTime Weather":
     df = df.iloc[0:, 1:]
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
-        fig.set_facecolor("#2F2E2E")
+        # fig.set_facecolor("#2F2E2E")
         st.write("**전국 주요 도시 {} 온도/습도 정보**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
         ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
                alpha = 1.0)
-        ax.set_ylabel("Current Temp.(℃)", color = "white", size = 11)
-        ax.set_xlabel("Name of City", color = "white", size = 11)
+        ax.set_ylabel("Current Temp.(℃)", color = "black", size = 11)
+        ax.set_xlabel("Name of City", color = "black", size = 11)
         ax2 = ax.twinx()
         ax2 = plt.gca()
         ax.spines["right"].set_visible(False)
@@ -233,13 +233,13 @@ if option == "예제3:RealTime Weather":
         ax2.spines["top"].set_visible(False)
         ax2.plot(df["City"], df["Humi(%)"], marker = "o", linewidth = 2.0,
                  color = "green")
-        ax2.set_ylabel("Current Humi(%)", color = "white", size = 11)
+        ax2.set_ylabel("Current Humi(%)", color = "black", size = 11)
         ax.legend(["Current Temp(℃)"], loc = "upper right")
         ax2.legend(["Current Humi(%)"], loc = "upper left")
-        ax.set_facecolor("#2F2E2E") #배경색
+        # ax.set_facecolor("#2F2E2E") #배경색
         ax.grid(True)
-        ax.tick_params(axis = "both", colors = "white", labelsize = 10)
-        ax2.tick_params(axis = "both", colors = "white", labelsize = 10)
+        ax.tick_params(axis = "both", colors = "black", labelsize = 10)
+        ax2.tick_params(axis = "both", colors = "black", labelsize = 10)
         st.pyplot(fig)
     elif table_btn:
         st.write("**전국 주요 도시 {} 기상 정보**".format(now))
