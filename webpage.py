@@ -69,7 +69,7 @@ if option == "예제1:Korean Body Shape":
     if graph_btn:
         st.write("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
         fig = plt.figure(figsize = (8, 6))
-        fig.set_facecolor("#2F2E2E")
+        # fig.set_facecolor("#2F2E2E")
         sns.barplot(data = df_body, x = "age", y = "mean",
                     hue = "gender", alpha = 0.8)
         plt.gca().spines["top"].set_visible(False)
