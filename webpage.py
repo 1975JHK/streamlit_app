@@ -27,13 +27,14 @@ st.set_page_config(
 
 # 4.sidebar 설계
 with st.sidebar:
-    option = st.selectbox(label = "**Choose One To Know:**",
-                          options = ["Introduction",
-                                     "Korean Body Shape",
-                                     "Economic Indicators",
-                                     "RealTime Weather"])
+    option = st.selectbox(label = "**이동하려는 페이지 선택:**",
+                          options = ["Data Science 소개",
+                                     "예제1:Korean Body Shape",
+                                     "예제2:Economic Indicators",
+                                     "예제3:RealTime Weather"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
+    st.write("---")
     st.write("신체정보입력")
     your_gender = st.selectbox(label = "성별 선택:", options = ["male", "female"],
                                index = 0)
