@@ -46,7 +46,7 @@ with st.sidebar:
     
 
 # 5.JH DataLab소개
-if option == "Introduction":
+if option == "Data Science 소개":
     history = [
     "JH DataLab은...",
     ":seedling: 데이터 분석 전문 서비스(Service)를 제공합니다.",
@@ -63,7 +63,7 @@ if option == "Introduction":
     con.image(image, use_column_width = True)
 
 # 6.한국인 체형
-if option == "Korean Body Shape":
+if option == "예제1:Korean Body Shape":
     df_body = pd.read_csv("height.csv")
 
     if graph_btn:
@@ -138,7 +138,7 @@ if option == "Korean Body Shape":
 
 
 # 7.주요 경제 지표
-if option == "Economic Indicators":
+if option == "예제2:Economic Indicators":
     file_paths = [
     "경제심리지수.csv",
     "소비자물가지수.csv",
@@ -197,7 +197,7 @@ if option == "Economic Indicators":
 
 
 # 8. 실시간 날씨 정보
-if option == "RealTime Weather":
+if option == "예제3:RealTime Weather":
     # 8-1.실시간 기상정보 크롤링
     update_weather = st.button("기상정보 Update")
     if update_weather:
