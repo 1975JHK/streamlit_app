@@ -31,19 +31,25 @@ with st.sidebar:
                           options = ["Data Science 소개",
                                      "예제1:Korean Body Shape",
                                      "예제2:Economic Indicators",
-                                     "예제3:RealTime Weather"])
+                                     "예제3:RealTime Weather"
+                                     "예제4:Process Capability"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
     st.write("---")
-    st.write("당신의 키는 상위 몇% 수준일까요?")
-    st.write("신체정보를 입력해서 알아보세요!")
-    your_gender = st.selectbox(label = "성별 선택:", options = ["male", "female"],
-                               index = 0)
-    your_age = st.number_input("연령(나이) 입력", 
-                               min_value = 1, max_value = 120, value = 20, step = 1)
-    your_height = st.number_input(label = "신장(키) 입력:",
-                                  min_value = 10, max_value = 250, value = 170, step = 1)
-    prob_btn = st.button(label = "신장(키) 확률")
+    st.write("공정 능력 구하기")
+    type = st.selectbox(label = "spec.형태",
+                        options = ["단측:상한", "단측:하한", "양측"])
+    usl = st.number_input(label = "USL 입력:",
+                          value = 5.0)
+    lsl = st.number_input(label = "LSL 입력:",
+                          value = 0.0)
+    mean = st.number_input(label = "평균 입력:",
+                           min_value = -10.0, max_value = 2000.0,
+                           value = 10.0)
+    stdev = st.number_input(label = "표준편차 입력:",
+                            min_value = -10.0, max_value = 2000.0,
+                            value = 1.0)
+    start = st.button(label = "공정 능력 산출")
     
 
 # 5.JH DataLab소개
@@ -92,51 +98,6 @@ if option == "예제1:Korean Body Shape":
         plt.tick_params(axis = "both", labelsize = 10, colors = "black")
         # plt.gca().set_facecolor("#2F2E2E")
         st.pyplot(fig)
-    elif prob_btn:
-        if your_age < 30:
-            selected = df_body[(df_body["age"] == 20)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 30 <= your_age < 40 :
-            selected = df_body[(df_body["age"] == 30)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 40 <= your_age < 50 :
-            selected = df_body[(df_body["age"] == 40)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-        elif 50 <= your_age < 60 :
-            selected = df_body[(df_body["age"] == 50)&(df_body["gender"] == your_gender)]
-            mean = selected.iloc[0, 2]
-            std = selected.iloc[0, 3]
-            
-        y = np.random.normal(mean, std, 10000)   # mean, stdev값을 받아서 10000개의 정규분포 난수 생성
-        x = np.linspace(start = np.min(y), stop = np.max(y), num = 1000) # y값의 최대/최소값 범위에서 1000개 등간격 숫자 생성
-        y1 = (1 / np.sqrt(2 * np.pi * std**2)) * np.exp(-(x-mean)**2 / (2 * std**2)) # 정규분포 곡선 생성
-        prob = round((1-norm.cdf(x = your_height, loc = mean, scale = std))*100, 1) # 정규분포에서 score값 이상의 누적확률 계산 
-         
-        st.write("당신의 키는 상위 몇%일까?")
-        fig = plt.figure(figsize = (8, 6))   # 그래프 객체 fig 생성 : streamlit에서는 명시적으로 생성해야 함
-        # fig.set_facecolor("#2F2E2E")
-        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) # 정규분포 곡선 작성
-        plt.vlines(x = your_height, ymin = 0.0, ymax = 0.1, colors = "red") # score값을 나타내는 수직선 생성
-        plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True)                         # 정규분포값으로 Histogram 생성
-        plt.grid(True)                                                # 그래프에 grid 생성
-        plt.text(x = your_height, y = 0.065, s = "My Height:{}cm".format(your_height), # score값을 그래프에 출력
-                color = "black", fontdict={"style":"italic", "size":12})
-        plt.text(x = your_height, y = 0.060, s = "My height from the top:{}%".format(prob), # score값의 상위 누적 확률 출력
-                color = "black", fontdict={"style":"italic", "size":12})
-        # plt.gca().set_facecolor("#2F2E2E")
-        plt.xlim((mean-20, mean+20))
-        plt.xlabel("Height(cm)", color = "black", fontdict={"size":11})
-        plt.ylabel("Probability", color = "black", fontdict={"size":11})
-        plt.yticks(color = "black", size = 9)
-        plt.xticks(color = "black", size = 9)
-        plt.gca().spines["bottom"].set_visible(False)
-        plt.gca().spines["top"].set_visible(False)
-        plt.gca().spines["left"].set_visible(False)
-        plt.gca().spines["right"].set_visible(False)
-        st.pyplot(fig)     
     else:
         st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
         st.dataframe(data = df_body, hide_index = True,
@@ -249,3 +210,75 @@ if option == "예제3:RealTime Weather":
         st.write("**전국 주요 도시 {} 기상 정보**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
+
+# 9. 실시간 날씨 정보
+if option == "예제4:Process Capability":
+    # visualization
+    if start:
+        y = np.random.normal(mean, stdev, 10000)
+        data = norm(loc = 0.0, scale = 1.0)
+        x = np.linspace(start = np.min(y), stop = np.max(y), num = 1000)
+        y1 = (1 / np.sqrt(2 * np.pi * stdev**2)) * np.exp(-(x - mean)**2 / (2 * stdev**2))
+    
+        if type == "단측:상한":
+            pci = (usl - mean)/stdev
+            prob = (1-data.cdf(pci))*1000000
+        elif type == "단측:하한":
+            pci = (mean - lsl)/stdev
+            prob = (1-data.cdf(pci))*1000000
+        else:
+            pci_usl = (usl - mean)/stdev
+            pci_lsl = (mean - lsl)/stdev
+            prob_usl = (1-data.cdf(pci_usl))*1000000
+            prob_lsl = (1-data.cdf(pci_lsl))*1000000
+            prob = prob_usl + prob_lsl
+            pci = norm.ppf((1-(prob/1000000)))
+        print("공정능력(Z):{:.2f}".format(pci))
+        print("불량률:{:.0f}ppm".format(prob))
+    
+        st.write("평균(Mean)과 표준편차(StDev)로 공정능력 파악하기")
+        fig = plt.figure(figsize = (8, 6))
+        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) # 정규분포 곡선 작성
+        plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True,
+                 edgecolor = "black")                         # 정규분포값으로 Histogram 생성
+        plt.grid(True)                                                # 그래프에 grid 생성
+        plt.text(x = mean*1.2, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
+                color = "red", fontdict={"style":"italic", "size":12})
+        plt.text(x = mean*1.2, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
+                color = "red", fontdict={"style":"italic", "size":12})
+        if type == "단측:상한":
+            plt.vlines(x = [mean, usl], ymin = 0.0, ymax = 0.45, 
+                       colors = ["blue", "red"], linestyles = ["dashed", "solid"],
+                       label = ["Mean", "USL"])
+            plt.text(x = usl, y = 0.45, s = "USL", 
+                     color = "red", fontdict={"style":"italic", "size":12})
+            plt.text(x = mean, y = 0.45, s = "Mean", 
+                     color = "blue", fontdict={"style":"italic", "size":12})
+            plt.xlim((np.min(x)*1.0, usl+(abs(usl)*0.3)))
+        elif type == "단측:하한":
+            plt.vlines(x = [lsl, mean], ymin = 0.0, ymax = 0.45, 
+                       colors = ["red", "blue"], linestyles = ["solid", "dashed"])
+            plt.text(x = lsl, y = 0.45, s = "LSL", 
+                     color = "red", fontdict={"style":"italic", "size":12})
+            plt.text(x = mean, y = 0.45, s = "Mean", 
+                     color = "blue", fontdict={"style":"italic", "size":12})
+            plt.xlim((lsl-(abs(lsl)*0.3), np.max(x)*1.0))
+        else:
+            plt.vlines(x = [lsl, mean, usl], ymin = 0.0, ymax = 0.45, 
+                       colors = ["red", "blue", "red"], linestyles = ["solid", "dashed", "solid"])
+            plt.text(x = usl, y = 0.45, s = "USL", 
+                     color = "red", fontdict={"style":"italic", "size":12})
+            plt.text(x = lsl, y = 0.45, s = "LSL", 
+                     color = "red", fontdict={"style":"italic", "size":12})
+            plt.text(x = mean, y = 0.45, s = "Mean", 
+                     color = "blue", fontdict={"style":"italic", "size":12})
+            plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
+        plt.xlabel("Values Expected", color = "black", fontdict={"size":11})
+        plt.ylabel("Probability", color = "black", fontdict={"size":11})
+        plt.yticks(color = "black", size = 9)
+        plt.xticks(color = "black", size = 9)
+        plt.gca().spines["bottom"].set_visible(False)
+        plt.gca().spines["top"].set_visible(False)
+        plt.gca().spines["left"].set_visible(False)
+        plt.gca().spines["right"].set_visible(False)
+        st.pyplot(fig)     
