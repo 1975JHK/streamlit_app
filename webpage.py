@@ -28,7 +28,7 @@ st.set_page_config(
 # 4.sidebar 설계
 with st.sidebar:
     option = st.selectbox(label = "**이동하려는 페이지 선택:**",
-                          options = ["Data Science 소개",
+                          options = ["JH Data Lab 소개",
                                      "예제1:Korean Body Shape",
                                      "예제2:Economic Indicators",
                                      "예제3:RealTime Weather",
