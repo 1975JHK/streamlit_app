@@ -36,7 +36,7 @@ with st.sidebar:
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
     st.write("---")
-    st.write("공정 능력 구하기")
+    st.write("**공정 능력 구하기**")
     type = st.selectbox(label = "spec.형태",
                         options = ["단측:상한", "단측:하한", "양측"])
     usl = st.number_input(label = "USL 입력:",
