@@ -31,7 +31,7 @@ with st.sidebar:
                           options = ["Data Science 소개",
                                      "예제1:Korean Body Shape",
                                      "예제2:Economic Indicators",
-                                     "예제3:RealTime Weather"
+                                     "예제3:RealTime Weather",
                                      "예제4:Process Capability"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
