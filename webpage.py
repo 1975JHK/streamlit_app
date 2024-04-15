@@ -40,14 +40,14 @@ with st.sidebar:
     type = st.selectbox(label = "spec.형태",
                         options = ["단측:상한", "단측:하한", "양측"])
     usl = st.number_input(label = "USL 입력:",
-                          value = 5.0)
+                          value = 7.0)
     lsl = st.number_input(label = "LSL 입력:",
-                          value = 0.0)
+                          value = 1.0)
     mean = st.number_input(label = "평균 입력:",
-                           min_value = -10.0, max_value = 2000.0,
-                           value = 10.0)
+                           min_value = -100.0, max_value = 2000.0,
+                           value = 4.0)
     stdev = st.number_input(label = "표준편차 입력:",
-                            min_value = -10.0, max_value = 2000.0,
+                            min_value = -100.0, max_value = 2000.0,
                             value = 1.0)
     start = st.button(label = "공정 능력 산출")
     
@@ -273,6 +273,7 @@ if option == "예제4:Process Capability":
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
             plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
+            
         plt.xlabel("Values Expected", color = "black", fontdict={"size":11})
         plt.ylabel("Probability", color = "black", fontdict={"size":11})
         plt.yticks(color = "black", size = 9)
@@ -281,4 +282,6 @@ if option == "예제4:Process Capability":
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
         plt.gca().spines["right"].set_visible(False)
-        st.pyplot(fig)     
+        st.pyplot(fig)
+    else:
+        st.markdown("사이드바에서 Mean, StDev, USL, LSL 등을 입력, 버튼을 누르세요!")
