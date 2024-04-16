@@ -128,7 +128,7 @@ if option == "예제2:Economic Indicators":
     colors = ["orange", "green", "steelblue"]
     
     if table_btn:
-        st.write("**한국 가계 경제 지표**")
+        st.write("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
         st.dataframe(data = df, hide_index = True,
                      width = 600, height = 550,
                      column_config={"year":st.column_config.NumberColumn(format="%d")})
@@ -177,7 +177,7 @@ if option == "예제3:RealTime Weather":
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.write("**전국 주요 도시 {} 온도/습도 정보**".format(now))
+        st.write("**전국 주요 도시 {} 온도/습도(기상청, RSS 서비스)**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
         ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
@@ -207,11 +207,11 @@ if option == "예제3:RealTime Weather":
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
     else:
-        st.write("**전국 주요 도시 {} 기상 정보**".format(now))
+        st.write("**전국 주요 도시 {} 기상 정보(기상청, RSS 서비스)**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
 
-# 9. 실시간 날씨 정보
+# 9. 공정 능력 분석(PCI)
 if option == "예제4:Process Capability":
     # visualization
     if start:
