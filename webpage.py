@@ -283,4 +283,5 @@ if option == "예제4:Process Capability":
         plt.gca().spines["right"].set_visible(False)
         st.pyplot(fig)
     else:
-        st.markdown("사이드바에서 :green[Spec.형태, USL, LSL, 평균, 표준편차]를 입력한 뒤, :green["공정능력 산출" 버튼]을 누르세요!")
+        st.markdown("사이드바에서 :green[Spec.형태, USL, LSL, 평균, 표준편차]를 입력하세요!")
+        st.markdown(":green["공정능력 산출" 버튼]을 누르세요!")
