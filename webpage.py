@@ -136,7 +136,7 @@ if option == "예제2:Economic Indicators":
     elif graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.write("**월별 가계 경제 지표 추이**")
+        st.write("**월별 가계 경제 지표 추이 (한국은행, 2022~2024년 자료)**")
         for i, name in enumerate(col_names[1:4]):
             plt.plot(df["Month"], df[name], marker = "o",
                     color = colors[i], label = name, markersize = 5.0,
@@ -157,7 +157,7 @@ if option == "예제2:Economic Indicators":
         st.pyplot(fig)
     
     else:
-        st.write("**한국 가계 경제 지표**")
+        st.write("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
         st.dataframe(data = df, hide_index = True,
                      width = 600, height = 550,
                      column_config={"year":st.column_config.NumberColumn(format="%d")})
@@ -177,7 +177,7 @@ if option == "예제3:RealTime Weather":
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.write("**전국 주요 도시 {} 온도/습도(기상청, RSS 서비스)**".format(now))
+        st.write("**전국 주요 도시 {} 온도/습도 (기상청, RSS 서비스)**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
         ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
@@ -203,11 +203,11 @@ if option == "예제3:RealTime Weather":
         ax2.tick_params(axis = "both", colors = "black", labelsize = 10)
         st.pyplot(fig)
     elif table_btn:
-        st.write("**전국 주요 도시 {} 기상 정보**".format(now))
+        st.write("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
     else:
-        st.write("**전국 주요 도시 {} 기상 정보(기상청, RSS 서비스)**".format(now))
+        st.write("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
 
