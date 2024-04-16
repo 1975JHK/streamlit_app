@@ -123,7 +123,7 @@ if option == "예제2:Economic Indicators":
             df_i = df_i.iloc[1:, :]
         if i >= 1:
             df = df.merge(df_i, how = "outer", on = "Month")
-    df = df.iloc[0:-1, :]
+    df = df.iloc[0:, :]
     col_names = df.columns
     colors = ["orange", "green", "steelblue"]
     
