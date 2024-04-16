@@ -38,7 +38,7 @@ with st.sidebar:
     st.write("---")
     st.write("**공정 능력 구하기**")
     type = st.selectbox(label = "spec.형태",
-                        options = ["단측:USL", "단측:LSL", "양측:BOTH"])
+                        options = ["단측:USL", "단측:LSL", "양측:BOTH"], index = 2)
     usl = st.number_input(label = "USL 입력:",
                           value = 15.0)
     lsl = st.number_input(label = "LSL 입력:",
