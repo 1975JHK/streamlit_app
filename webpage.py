@@ -148,7 +148,7 @@ if option == "예제2:Economic Indicators":
         plt.gca().spines["right"].set_visible(False)
         plt.gca().spines["bottom"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
-        plt.ylim(85.0, 115.0)
+        plt.ylim(90.0, 115.0)
         plt.yticks(color = "black", size = 9)
         plt.xticks(np.arange(0, df.shape[0], step = 2), color = "black",
                    rotation = 45, size = 9)
