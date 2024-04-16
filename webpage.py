@@ -38,14 +38,14 @@ with st.sidebar:
     st.write("---")
     st.write("**공정 능력 구하기**")
     type = st.selectbox(label = "spec.형태",
-                        options = ["단측:상한", "단측:하한", "양측"])
+                        options = ["단측:USL", "단측:LSL", "양측:BOTH"])
     usl = st.number_input(label = "USL 입력:",
-                          value = 7.0)
+                          value = 15.0)
     lsl = st.number_input(label = "LSL 입력:",
-                          value = 1.0)
+                          value = 5.0)
     mean = st.number_input(label = "평균 입력:",
                            min_value = -100.0, max_value = 2000.0,
-                           value = 4.0)
+                           value = 10.0)
     stdev = st.number_input(label = "표준편차 입력:",
                             min_value = -100.0, max_value = 2000.0,
                             value = 1.0)
@@ -217,13 +217,13 @@ if option == "예제4:Process Capability":
     if start:
         y = np.random.normal(mean, stdev, 10000)
         data = norm(loc = 0.0, scale = 1.0)
-        x = np.linspace(start = np.min(y), stop = np.max(y), num = 1000)
-        y1 = (1 / np.sqrt(2 * np.pi * stdev**2)) * np.exp(-(x - mean)**2 / (2 * stdev**2))
+        x = np.linspace(start = np.min(y), stop = np.max(y), num = 10000)
+        y1 = norm.pdf(x, mean, stdev)
     
-        if type == "단측:상한":
+        if type == "단측:USL":
             pci = (usl - mean)/stdev
             prob = (1-data.cdf(pci))*1000000
-        elif type == "단측:하한":
+        elif type == "단측:LSL":
             pci = (mean - lsl)/stdev
             prob = (1-data.cdf(pci))*1000000
         else:
@@ -238,15 +238,15 @@ if option == "예제4:Process Capability":
     
         st.write("평균(Mean)과 표준편차(StDev)로 공정능력 파악하기")
         fig = plt.figure(figsize = (8, 6))
-        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) # 정규분포 곡선 작성
-        plt.hist(x = y, bins = 20, color = "orange", alpha = 0.7, density = True,
-                 edgecolor = "black")                         # 정규분포값으로 Histogram 생성
-        plt.grid(True)                                                # 그래프에 grid 생성
+        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
+        plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
+                 edgecolor = "black")                         
+        plt.grid(True)                                               
         plt.text(x = mean*1.2, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
                 color = "red", fontdict={"style":"italic", "size":12})
         plt.text(x = mean*1.2, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
                 color = "red", fontdict={"style":"italic", "size":12})
-        if type == "단측:상한":
+        if type == "단측:USL":
             plt.vlines(x = [mean, usl], ymin = 0.0, ymax = 0.45, 
                        colors = ["blue", "red"], linestyles = ["dashed", "solid"],
                        label = ["Mean", "USL"])
@@ -254,8 +254,8 @@ if option == "예제4:Process Capability":
                      color = "red", fontdict={"style":"italic", "size":12})
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((np.min(x)*1.0, usl+(abs(usl)*0.3)))
-        elif type == "단측:하한":
+            plt.xlim((np.min(x)-(abs(np.min(x))*0.2), usl+(abs(usl)*0.3)))
+        elif type == "단측:LSL":
             plt.vlines(x = [lsl, mean], ymin = 0.0, ymax = 0.45, 
                        colors = ["red", "blue"], linestyles = ["solid", "dashed"])
             plt.text(x = lsl, y = 0.45, s = "LSL", 
@@ -273,7 +273,6 @@ if option == "예제4:Process Capability":
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
             plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
-            
         plt.xlabel("Values Expected", color = "black", fontdict={"size":11})
         plt.ylabel("Probability", color = "black", fontdict={"size":11})
         plt.yticks(color = "black", size = 9)
@@ -284,4 +283,4 @@ if option == "예제4:Process Capability":
         plt.gca().spines["right"].set_visible(False)
         st.pyplot(fig)
     else:
-        st.markdown("사이드바에서 Mean, StDev, USL, LSL 등을 입력, 버튼을 누르세요!")
+        st.markdown("사이드바에서 :green[Spec.형태, USL, LSL, 평균, 표준편차]를 입력한 뒤, :green["공정능력 산출" 버튼]을 누르세요!")
