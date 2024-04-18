@@ -291,7 +291,7 @@ if option == "예제4:Process Capability":
             st.write(":green[Spec., 평균, 표준편차]를 입력하세요")
             st.write(":green[공정 능력 산출 버튼]을 클릭하세요")
             
------------------------------------------------------------------            
+#--------------------------------------------------------------#       
 # 10. Vital Few Xs 선정의 효과
 if option == "예제5:Vital Few Xs 선택":
     # Importing the dataset
