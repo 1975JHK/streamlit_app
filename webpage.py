@@ -259,7 +259,7 @@ if option == "예제4:Process Capability":
                      color = "red", fontdict={"style":"italic", "size":12})
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((np.min(x)-(abs(np.min(x))*0.1), usl+(abs(usl)*0.1)))
+            plt.xlim((np.min(x)-(abs(np.min(x))*0.05), usl+(abs(usl)*0.05)))
         elif type == "단측:LSL":
             plt.vlines(x = [lsl, mean], ymin = 0.0, ymax = 0.45, 
                        colors = ["red", "blue"], linestyles = ["solid", "dashed"])
@@ -267,7 +267,7 @@ if option == "예제4:Process Capability":
                      color = "red", fontdict={"style":"italic", "size":12})
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((lsl-(abs(lsl)*0.1), np.max(x)*1.0))
+            plt.xlim((lsl-(abs(lsl)*0.05), np.max(x)+(abs(np.max(x))*0.05)))
         else:
             plt.vlines(x = [lsl, mean, usl], ymin = 0.0, ymax = 0.45, 
                        colors = ["red", "blue", "red"], linestyles = ["solid", "dashed", "solid"])
