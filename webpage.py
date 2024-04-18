@@ -198,7 +198,7 @@ if option == "예제3:RealTime Weather":
 # 9. 공정 능력 분석(PCI)
 if option == "예제4:Process Capability":
     # 입력 widget column 생성
-    col1, col2 = st.columns([2, 12])
+    col1, col2 = st.columns([2, 8])
     with col1:
         st.write("**공정 능력 구하기**")
         type = st.selectbox(label = "spec.형태",
@@ -239,7 +239,7 @@ if option == "예제4:Process Capability":
             print("불량률:{:.0f}ppm".format(prob))
         
             st.write("평균(Mean)과 표준편차(StDev)로 공정능력 파악하기")
-            fig = plt.figure()
+            fig = plt.figure(figsize = (8, 6))
             plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
             plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
                      edgecolor = "black")                         
