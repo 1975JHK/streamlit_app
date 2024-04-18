@@ -197,10 +197,11 @@ if option == "예제3:RealTime Weather":
 
 # 9. 공정 능력 분석(PCI)
 if option == "예제4:Process Capability":
+    st.write("**평균, 표준편차, Spec.을 이용한 공정 능력 구하기**")
+    st.write("---")
     # 입력 widget column 생성
     col1, col2 = st.columns([2, 8])
     with col1:
-        st.write("**공정 능력 구하기**")
         type = st.selectbox(label = "spec.형태",
                             options = ["단측:USL", "단측:LSL", "양측:BOTH"], index = 2)
         usl = st.number_input(label = "USL 입력:",
