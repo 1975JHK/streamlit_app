@@ -32,7 +32,8 @@ with st.sidebar:
                                      "예제1:Korean Body Shape",
                                      "예제2:Economic Indicators",
                                      "예제3:RealTime Weather",
-                                     "예제4:Process Capability"])
+                                     "예제4:Process Capability",
+                                     "예제5:Vital Few Xs 선택"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
 
@@ -286,3 +287,49 @@ if option == "예제4:Process Capability":
         else:
             st.write(":green[Spec., 평균, 표준편차]를 입력하세요")
             st.write(":green[공정 능력 산출 버튼]을 클릭하세요")
+# 10. Vital Few Xs 선정의 효과
+if option == "예제5:Vital Few Xs 선택":
+    # Importing the dataset
+    raw = pd.read_csv(r"E:\streamlit3\datasets\iris.csv")
+    df = raw.copy()
+    names = ["setosa", "versicolor", "virginica"]
+    colors = ["#8db600", "#F28500", "#4682b4"]
+    for i, name in enumerate(names):
+        for j in range(df.shape[0]):
+            if df["species"][j] == name:
+                df["species"][j] = colors[i]
+    
+    # Select Variables with selectbox
+    with st.sidebar:
+        xvar = st.selectbox(label = "X Variable:",
+                            options = df.columns)
+        yvar = st.selectbox(label = "Y Variable",
+                            options = df.columns)
+        size = st.slider(label = "Point Size:", min_value = 10,
+                         max_value = 100, value = 50, step = 5)
+        
+        
+    # Display graph with scatterplot
+    locs = ["left", "right", "top", "bottom"]
+    fig = plt.figure(figsize = (8, 6), dpi = 120)
+    plt.title("IRIS Feature에 따른 Species분류",
+              fontdict = {"weight":"bold", "size":15})
+    plt.scatter(x = df[xvar], y = df[yvar], marker = "o",
+                color = df["species"], s = size)
+    plt.xlabel(xvar, fontdict = {"weight":"bold", "size":13})
+    plt.ylabel(yvar, fontdict = {"weight":"bold", "size":13})
+    for loc in locs:
+        plt.gca().spines[loc].set_visible(False)
+    plt.grid(True)
+    st.pyplot(fig)
+    
+    # RandomForest로 분류하기
+    trainx, testx, trainy, testy = train_test_split(df.iloc[:, :4],
+                                                    df.iloc[:, 4],
+                                                    test_size = 0.2)
+    classifier = RandomForestClassifier(n_estimators=100)
+    classifier.fit(X = trainx.loc[:, [xvar, yvar]],
+                   y = trainy)
+    predy = classifier.predict(X = testx.loc[:, [xvar, yvar]])
+    score = accuracy_score(testy, predy)
+    print("Random Forest 분류모델 정확도:{:.1f}%".format(score*100))
