@@ -349,7 +349,7 @@ if option == "예제5:Vital Few Xs 선택":
         cm = confusion_matrix(testy, predy)
         st.write("---")
         fig = plt.figure(figsize = (8, 6), dpi = 120)
-        plt.title("RandomForest 분류 정확도:{:.1f}%".format(score*100),
+        plt.title("RandomForest Classification Accuracy:{:.1f}%".format(score*100),
                    fontdict = {"weight":"bold", "size":13})
         sns.heatmap(data = cm, cmap = "Blues",
                     annot = True, xticklabels = names, yticklabels = names)
