@@ -247,9 +247,9 @@ if option == "예제4:Process Capability":
         plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
                  edgecolor = "black")                         
         plt.grid(True)                                               
-        plt.text(x = mean*1.05, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
+        plt.text(x = mean*1.02, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
                 color = "red", fontdict={"style":"italic", "size":12})
-        plt.text(x = mean*1.05, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
+        plt.text(x = mean*1.02, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
                 color = "red", fontdict={"style":"italic", "size":12})
         if type == "단측:USL":
             plt.vlines(x = [mean, usl], ymin = 0.0, ymax = 0.45, 
