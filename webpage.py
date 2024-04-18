@@ -214,7 +214,6 @@ if option == "예제4:Process Capability":
         stdev = st.number_input(label = "표준편차 입력:",
                                 min_value = -100.0, max_value = 2000.0,
                                 value = 1.0)
-        start = st.button(label = "공정 능력 산출")
     with col2:
         # visualization
         y = np.random.normal(mean, stdev, 10000)
@@ -274,10 +273,10 @@ if option == "예제4:Process Capability":
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
             plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
-        plt.xlabel("Values Expected", color = "black", fontdict={"size":11})
-        plt.ylabel("Probability", color = "black", fontdict={"size":11})
-        plt.yticks(color = "black", size = 9)
-        plt.xticks(color = "black", size = 9)
+        plt.xlabel("Values Expected", color = "black", fontdict={"size":13})
+        plt.ylabel("Probability", color = "black", fontdict={"size":13})
+        plt.yticks(color = "black", size = 10)
+        plt.xticks(color = "black", size = 10)
         plt.gca().spines["bottom"].set_visible(False)
         plt.gca().spines["top"].set_visible(False)
         plt.gca().spines["left"].set_visible(False)
