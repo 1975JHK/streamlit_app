@@ -317,7 +317,6 @@ if option == "예제5:Vital Few Xs 선택":
                          max_value = 100, value = 50, step = 5)
         start = st.button(label = "분류모델 작동")
         
-        
     # Display graph with scatterplot
     locs = ["left", "right", "top", "bottom"]
     fig = plt.figure(figsize = (8, 6), dpi = 120)
