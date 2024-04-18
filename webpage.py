@@ -267,7 +267,7 @@ if option == "예제4:Process Capability":
                      color = "red", fontdict={"style":"italic", "size":12})
             plt.text(x = mean, y = 0.45, s = "Mean", 
                      color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((lsl-(abs(lsl)*0.3), np.max(x)*1.0))
+            plt.xlim((lsl-(abs(lsl)*0.1), np.max(x)*1.0))
         else:
             plt.vlines(x = [lsl, mean, usl], ymin = 0.0, ymax = 0.45, 
                        colors = ["red", "blue", "red"], linestyles = ["solid", "dashed", "solid"])
