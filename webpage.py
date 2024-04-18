@@ -21,7 +21,7 @@ matplotlib.rcParams["axes.unicode_minus"] = False
 st.set_page_config(
     page_title = "JH DataLab",
     page_icon = ":bulb:",
-    layout = "centered",
+    layout = "wide",
     initial_sidebar_state = "auto"
 )
 
