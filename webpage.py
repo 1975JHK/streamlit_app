@@ -203,9 +203,9 @@ if option == "예제3:RealTime Weather":
 #--------------------------------------------------------------#    
 # 9. 공정 능력 분석(PCI)
 if option == "예제4:Process Capability":
-    st.write("---")
-    st.write("**공정 능력 구하기**")
     with st.sidebar:
+        st.write("---")
+        st.write("**공정 능력 구하기**")
         type = st.selectbox(label = "spec.형태",
                             options = ["단측:USL", "단측:LSL", "양측:BOTH"], index = 2)
         usl = st.number_input(label = "USL 입력:",
@@ -242,7 +242,7 @@ if option == "예제4:Process Capability":
         print("공정능력(Z):{:.2f}".format(pci))
         print("불량률:{:.0f}ppm".format(prob))
     
-        fig = plt.figure(figsize = (9, 8))
+        fig = plt.figure(figsize = (8, 6))
         plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
         plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
                  edgecolor = "black")                         
