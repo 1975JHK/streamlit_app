@@ -198,7 +198,7 @@ if option == "예제3:RealTime Weather":
 # 9. 공정 능력 분석(PCI)
 if option == "예제4:Process Capability":
     # 입력 widget column 생성
-    col1, col2 = st.columns([2, 8])
+    col1, col2 = st.columns([2, 12])
     with col1:
         st.write("**공정 능력 구하기**")
         type = st.selectbox(label = "spec.형태",
