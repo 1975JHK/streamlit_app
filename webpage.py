@@ -239,7 +239,7 @@ if option == "예제4:Process Capability":
             print("불량률:{:.0f}ppm".format(prob))
         
             st.write("평균(Mean)과 표준편차(StDev)로 공정능력 파악하기")
-            fig = plt.figure(figsize = (10, 6))
+            fig = plt.figure()
             plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
             plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
                      edgecolor = "black")                         
