@@ -290,7 +290,7 @@ if option == "예제4:Process Capability":
 # 10. Vital Few Xs 선정의 효과
 if option == "예제5:Vital Few Xs 선택":
     # Importing the dataset
-    raw = pd.read_csv(r"E:\streamlit3\datasets\iris.csv")
+    raw = pd.read_csv("iris.csv")
     df = raw.copy()
     names = ["setosa", "versicolor", "virginica"]
     colors = ["#8db600", "#F28500", "#4682b4"]
