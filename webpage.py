@@ -237,7 +237,7 @@ if option == "예제4:Process Capability":
         print("공정능력(Z):{:.2f}".format(pci))
         print("불량률:{:.0f}ppm".format(prob))
     
-        fig = plt.figure(figsize = (8, 6))
+        fig = plt.figure(figsize = (9, 8))
         plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
         plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
                  edgecolor = "black")                         
