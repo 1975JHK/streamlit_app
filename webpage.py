@@ -214,71 +214,75 @@ if option == "예제4:Process Capability":
         stdev = st.number_input(label = "표준편차 입력:",
                                 min_value = -100.0, max_value = 2000.0,
                                 value = 1.0)
+        start = st.button(label = "공정능력 산출")
     with col2:
         # visualization
         y = np.random.normal(mean, stdev, 10000)
         data = norm(loc = 0.0, scale = 1.0)
         x = np.linspace(start = np.min(y), stop = np.max(y), num = 10000)
         y1 = norm.pdf(x, mean, stdev)
-    
-        if type == "단측:USL":
-            pci = (usl - mean)/stdev
-            prob = (1-data.cdf(pci))*1000000
-        elif type == "단측:LSL":
-            pci = (mean - lsl)/stdev
-            prob = (1-data.cdf(pci))*1000000
+        if start:
+            if type == "단측:USL":
+                pci = (usl - mean)/stdev
+                prob = (1-data.cdf(pci))*1000000
+            elif type == "단측:LSL":
+                pci = (mean - lsl)/stdev
+                prob = (1-data.cdf(pci))*1000000
+            else:
+                pci_usl = (usl - mean)/stdev
+                pci_lsl = (mean - lsl)/stdev
+                prob_usl = (1-data.cdf(pci_usl))*1000000
+                prob_lsl = (1-data.cdf(pci_lsl))*1000000
+                prob = prob_usl + prob_lsl
+                pci = norm.ppf((1-(prob/1000000)))
+            print("공정능력(Z):{:.2f}".format(pci))
+            print("불량률:{:.0f}ppm".format(prob))
+        
+            fig = plt.figure(figsize = (9, 8))
+            plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
+            plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
+                     edgecolor = "black")                         
+            plt.grid(True)                                               
+            plt.text(x = mean*1.2, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
+                    color = "red", fontdict={"style":"italic", "size":12})
+            plt.text(x = mean*1.2, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
+                    color = "red", fontdict={"style":"italic", "size":12})
+            if type == "단측:USL":
+                plt.vlines(x = [mean, usl], ymin = 0.0, ymax = 0.45, 
+                           colors = ["blue", "red"], linestyles = ["dashed", "solid"],
+                           label = ["Mean", "USL"])
+                plt.text(x = usl, y = 0.45, s = "USL", 
+                         color = "red", fontdict={"style":"italic", "size":12})
+                plt.text(x = mean, y = 0.45, s = "Mean", 
+                         color = "blue", fontdict={"style":"italic", "size":12})
+                plt.xlim((np.min(x)-(abs(np.min(x))*0.2), usl+(abs(usl)*0.3)))
+            elif type == "단측:LSL":
+                plt.vlines(x = [lsl, mean], ymin = 0.0, ymax = 0.45, 
+                           colors = ["red", "blue"], linestyles = ["solid", "dashed"])
+                plt.text(x = lsl, y = 0.45, s = "LSL", 
+                         color = "red", fontdict={"style":"italic", "size":12})
+                plt.text(x = mean, y = 0.45, s = "Mean", 
+                         color = "blue", fontdict={"style":"italic", "size":12})
+                plt.xlim((lsl-(abs(lsl)*0.3), np.max(x)*1.0))
+            else:
+                plt.vlines(x = [lsl, mean, usl], ymin = 0.0, ymax = 0.45, 
+                           colors = ["red", "blue", "red"], linestyles = ["solid", "dashed", "solid"])
+                plt.text(x = usl, y = 0.45, s = "USL", 
+                         color = "red", fontdict={"style":"italic", "size":12})
+                plt.text(x = lsl, y = 0.45, s = "LSL", 
+                         color = "red", fontdict={"style":"italic", "size":12})
+                plt.text(x = mean, y = 0.45, s = "Mean", 
+                         color = "blue", fontdict={"style":"italic", "size":12})
+                plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
+            plt.xlabel("Values Expected", color = "black", fontdict={"size":13})
+            plt.ylabel("Probability", color = "black", fontdict={"size":13})
+            plt.yticks(color = "black", size = 10)
+            plt.xticks(color = "black", size = 10)
+            plt.gca().spines["bottom"].set_visible(False)
+            plt.gca().spines["top"].set_visible(False)
+            plt.gca().spines["left"].set_visible(False)
+            plt.gca().spines["right"].set_visible(False)
+            st.pyplot(fig)
         else:
-            pci_usl = (usl - mean)/stdev
-            pci_lsl = (mean - lsl)/stdev
-            prob_usl = (1-data.cdf(pci_usl))*1000000
-            prob_lsl = (1-data.cdf(pci_lsl))*1000000
-            prob = prob_usl + prob_lsl
-            pci = norm.ppf((1-(prob/1000000)))
-        print("공정능력(Z):{:.2f}".format(pci))
-        print("불량률:{:.0f}ppm".format(prob))
-    
-        fig = plt.figure(figsize = (9, 8))
-        plt.plot(x, y1, marker = "", color = "blue", linewidth = 3) 
-        plt.hist(x = y, bins = 50, color = "orange", alpha = 0.7, density = True,
-                 edgecolor = "black")                         
-        plt.grid(True)                                               
-        plt.text(x = mean*1.2, y = 0.39, s = "Process Capability(Z):{:.2f}".format(pci),
-                color = "red", fontdict={"style":"italic", "size":12})
-        plt.text(x = mean*1.2, y = 0.37, s = "Expected Defective:{:.0f}ppm".format(prob), 
-                color = "red", fontdict={"style":"italic", "size":12})
-        if type == "단측:USL":
-            plt.vlines(x = [mean, usl], ymin = 0.0, ymax = 0.45, 
-                       colors = ["blue", "red"], linestyles = ["dashed", "solid"],
-                       label = ["Mean", "USL"])
-            plt.text(x = usl, y = 0.45, s = "USL", 
-                     color = "red", fontdict={"style":"italic", "size":12})
-            plt.text(x = mean, y = 0.45, s = "Mean", 
-                     color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((np.min(x)-(abs(np.min(x))*0.2), usl+(abs(usl)*0.3)))
-        elif type == "단측:LSL":
-            plt.vlines(x = [lsl, mean], ymin = 0.0, ymax = 0.45, 
-                       colors = ["red", "blue"], linestyles = ["solid", "dashed"])
-            plt.text(x = lsl, y = 0.45, s = "LSL", 
-                     color = "red", fontdict={"style":"italic", "size":12})
-            plt.text(x = mean, y = 0.45, s = "Mean", 
-                     color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((lsl-(abs(lsl)*0.3), np.max(x)*1.0))
-        else:
-            plt.vlines(x = [lsl, mean, usl], ymin = 0.0, ymax = 0.45, 
-                       colors = ["red", "blue", "red"], linestyles = ["solid", "dashed", "solid"])
-            plt.text(x = usl, y = 0.45, s = "USL", 
-                     color = "red", fontdict={"style":"italic", "size":12})
-            plt.text(x = lsl, y = 0.45, s = "LSL", 
-                     color = "red", fontdict={"style":"italic", "size":12})
-            plt.text(x = mean, y = 0.45, s = "Mean", 
-                     color = "blue", fontdict={"style":"italic", "size":12})
-            plt.xlim((lsl-(abs(lsl)*0.3), usl+(abs(usl)*0.3)))
-        plt.xlabel("Values Expected", color = "black", fontdict={"size":13})
-        plt.ylabel("Probability", color = "black", fontdict={"size":13})
-        plt.yticks(color = "black", size = 10)
-        plt.xticks(color = "black", size = 10)
-        plt.gca().spines["bottom"].set_visible(False)
-        plt.gca().spines["top"].set_visible(False)
-        plt.gca().spines["left"].set_visible(False)
-        plt.gca().spines["right"].set_visible(False)
-        st.pyplot(fig)
+            st.write(":green[Spec., 평균, 표준편차]를 입력하세요")
+            st.write(":green[공정 능력 산출 버튼]을 클릭하세요")
