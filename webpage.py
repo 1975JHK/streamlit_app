@@ -304,7 +304,8 @@ if option == "예제5:Vital Few Xs 선택":
     
     # Select Variables with selectbox
     with st.sidebar:
-        st.write("X/Y변수, Point Size 선택")
+        st.write("---")
+        st.write("**X/Y변수, Point Size 선택**")
         xvar = st.selectbox(label = "X Variable:",
                             options = df.columns)
         yvar = st.selectbox(label = "Y Variable",
