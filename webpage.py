@@ -13,7 +13,8 @@ from scipy.stats import norm
 from Weather import Weather
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
+import seaborn as sns
 
 # 2.시각화 기본 설정
 matplotlib.rcParams["font.family"] = "Malgun Gothic"
@@ -315,6 +316,7 @@ if option == "예제5:Vital Few Xs 선택":
                             options = variables[:4], index = 1)
         size = st.slider(label = "Point Size:", min_value = 10,
                          max_value = 100, value = 50, step = 5)
+        start = st.button(label = "분류모델 작동")
         
         
     # Display graph with scatterplot
@@ -341,3 +343,20 @@ if option == "예제5:Vital Few Xs 선택":
     predy = classifier.predict(X = testx.loc[:, [xvar, yvar]])
     score = accuracy_score(testy, predy)
     print("Random Forest 분류모델 정확도:{:.1f}%".format(score*100))
+
+    # 분류결과 Visualization
+    if start:
+        cm = confusion_matrix(testy, predy)
+        st.write("---")
+        fig = plt.figure(figsize = (8, 6), dpi = 120)
+        plt.title("RandomForest 분류 정확도:{:.1f}%".format(score*100),
+                   fontdict = {"weight":"bold", "size":13})
+        sns.heatmap(data = cm, cmap = "Blues",
+                    annot = True, xticklabels = names, yticklabels = names)
+        plt.xlabel("True Value",
+                   fontdict = {"weight":"bold", "size":13})
+        plt.ylabel("Predicted Value",
+                   fontdict = {"weight":"bold", "size":13})
+        for loc in locs:
+            plt.gca().spines[loc].set_visible(False)
+        st.pyplot(fig)
