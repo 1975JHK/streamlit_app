@@ -290,6 +290,7 @@ if option == "예제4:Process Capability":
         else:
             st.write(":green[Spec., 평균, 표준편차]를 입력하세요")
             st.write(":green[공정 능력 산출 버튼]을 클릭하세요")
+            
 # 10. Vital Few Xs 선정의 효과
 if option == "예제5:Vital Few Xs 선택":
     # Importing the dataset
@@ -303,13 +304,14 @@ if option == "예제5:Vital Few Xs 선택":
                 df["species"][j] = colors[i]
     
     # Select Variables with selectbox
+    variables = df.columns
     with st.sidebar:
         st.write("---")
         st.write("**X/Y변수, Point Size 선택**")
         xvar = st.selectbox(label = "X Variable:",
-                            options = df.columns)
+                            options = variables[:4])
         yvar = st.selectbox(label = "Y Variable",
-                            options = df.columns)
+                            options = variables[:4])
         size = st.slider(label = "Point Size:", min_value = 10,
                          max_value = 100, value = 50, step = 5)
         
