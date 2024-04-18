@@ -7,3 +7,4 @@ datetime
 pillow
 requests
 scipy
+sklearn
