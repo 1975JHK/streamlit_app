@@ -347,6 +347,7 @@ if option == "예제5:Vital Few Xs 선택":
     # 분류결과 Visualization
     if start:
         cm = confusion_matrix(testy, predy)
+        st.write("**스크롤바를 내려서 아래의 Confusion Matrix를 보세요!**")
         st.write("---")
         fig = plt.figure(figsize = (8, 6), dpi = 120)
         plt.title("RandomForest Classification Accuracy:{:.1f}%".format(score*100),
