@@ -304,6 +304,7 @@ if option == "예제5:Vital Few Xs 선택":
     
     # Select Variables with selectbox
     with st.sidebar:
+        st.write("X/Y변수, Point Size 선택")
         xvar = st.selectbox(label = "X Variable:",
                             options = df.columns)
         yvar = st.selectbox(label = "Y Variable",
@@ -315,7 +316,7 @@ if option == "예제5:Vital Few Xs 선택":
     # Display graph with scatterplot
     locs = ["left", "right", "top", "bottom"]
     fig = plt.figure(figsize = (8, 6), dpi = 120)
-    plt.title("IRIS Feature에 따른 Species분류",
+    plt.title("Species Classification Visualization with IRIS Features",
               fontdict = {"weight":"bold", "size":15})
     plt.scatter(x = df[xvar], y = df[yvar], marker = "o",
                 color = df["species"], s = size)
