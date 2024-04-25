@@ -29,6 +29,23 @@ st.set_page_config(
     initial_sidebar_state = "auto"
 )
 
+# 3-1.방문자 수 counting
+count = 0
+dates = []
+visitors = []
+def counting_visitors():
+    global count
+    count += 1
+    now = dt.datetime.now().strftime("%y/%m/%d %H:%M:%S")
+    with open("visitors_information.csv", mode = "a") as file:
+        information = now + "\t" + str(count) +"\n"
+        file.write(information)
+    with open("visitors_information.csv", mode = "r") as file:
+        lines = file.readlines()
+        num_visitors = len(lines)
+    return num_visitors
+    
+    
 # 4.sidebar 설계
 with st.sidebar:
     option = st.selectbox(label = "**이동하려는 페이지 선택:**",
@@ -58,7 +75,8 @@ if option == "JH Data Lab 소개":
         time.sleep(1.5)
     image = Image.open("good_logo.jpg")
     con.image(image, use_column_width = True)
-    st.write("당신은 이 Web App의 {}번째 방문자입니다!".format(visitor))
+    visitors = counting_visitors
+    st.write("당신은 이 Web App의 {}번째 방문자입니다!".format(visitors))
 
 # 6.한국인 체형
 if option == "예제1:Korean Body Shape":
