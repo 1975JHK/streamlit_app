@@ -147,7 +147,7 @@ if option == "예제2:Economic Indicators":
         st.pyplot(fig)
     
     else:
-        st.write("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
+        st.subheader("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
         st.dataframe(data = df, hide_index = True,
                      width = 600, height = 550,
                      column_config={"year":st.column_config.NumberColumn(format="%d")})
@@ -167,7 +167,7 @@ if option == "예제3:RealTime Weather":
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.write("**전국 주요 도시 {} 온도/습도 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 {} 온도/습도 (기상청, RSS 서비스)**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
         ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
@@ -193,11 +193,11 @@ if option == "예제3:RealTime Weather":
         ax2.tick_params(axis = "both", colors = "black", labelsize = 10)
         st.pyplot(fig)
     elif table_btn:
-        st.write("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
     else:
-        st.write("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
 
@@ -289,8 +289,8 @@ if option == "예제4:Process Capability":
         plt.gca().spines["right"].set_visible(False)
         st.pyplot(fig)
     else:
-        st.write(":green[Spec., 평균, 표준편차]를 입력하세요")
-        st.write(":green[공정 능력 산출 버튼]을 클릭하세요")
+        st.markdown(":green[Spec., 평균, 표준편차]를 입력하세요")
+        st.markdown(":green[공정 능력 산출 버튼]을 클릭하세요")
             
 #--------------------------------------------------------------#       
 # 10. Vital Few Xs 선정의 효과
@@ -346,7 +346,7 @@ if option == "예제5:Vital Few Xs 선택":
     # 분류결과 Visualization
     if start:
         cm = confusion_matrix(testy, predy)
-        st.write("**스크롤바를 내려서 아래의 Confusion Matrix를 보세요!**")
+        st.markdown("**스크롤바를 내려서 아래의 Confusion Matrix를 보세요!**")
         st.write("---")
         fig = plt.figure(figsize = (8, 6), dpi = 120)
         plt.title("RandomForest Classification Accuracy:{:.1f}%".format(score*100),
