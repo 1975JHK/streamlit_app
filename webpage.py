@@ -167,7 +167,8 @@ if option == "예제3:RealTime Weather":
     if graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.subheader("**전국 주요 도시 {} 온도/습도 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 v온도/습도 (기상청, RSS 서비스)**")
+        st.write("**현재시각:{}**".format(now))
         ax = fig.subplots()
         ax = plt.gca()
         ax.bar(x = df["City"],height = df["Temp(℃)"], color = "orange",
@@ -193,11 +194,13 @@ if option == "예제3:RealTime Weather":
         ax2.tick_params(axis = "both", colors = "black", labelsize = 10)
         st.pyplot(fig)
     elif table_btn:
-        st.subheader("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 기상 정보 (기상청, RSS 서비스)**")
+        st.write("**현재시각:{}**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
     else:
-        st.subheader("**전국 주요 도시 {} 기상 정보 (기상청, RSS 서비스)**".format(now))
+        st.subheader("**전국 주요 도시 기상 정보 (기상청, RSS 서비스)**")
+        st.write("**현재시각:{}**".format(now))
         st.dataframe(data = df, use_container_width = True,
                     hide_index = True)
 
