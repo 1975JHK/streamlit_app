@@ -43,6 +43,7 @@ with st.sidebar:
 
 # 5.JH DataLab소개
 if option == "JH Data Lab 소개":
+    visitor += 1
     history = [
     "JH DataLab은...",
     ":seedling: 데이터 분석 전문 서비스(Service)를 제공합니다.",
@@ -57,6 +58,7 @@ if option == "JH Data Lab 소개":
         time.sleep(1.5)
     image = Image.open("good_logo.jpg")
     con.image(image, use_column_width = True)
+    st.write("당신은 이 Web App의 {}번째 방문자입니다!".format(visitor))
 
 # 6.한국인 체형
 if option == "예제1:Korean Body Shape":
