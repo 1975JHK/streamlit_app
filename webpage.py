@@ -64,6 +64,7 @@ if option == "예제1:Korean Body Shape":
 
     if graph_btn:
         st.subheader("**한국인 성별 연령별 체형 정보 (통계청, 2022년 자료)**")
+        st.write("**성별 연령대 평균 신장**")
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
         sns.barplot(data = df_body, x = "age", y = "mean",
