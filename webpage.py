@@ -60,7 +60,6 @@ with st.sidebar:
 
 # 5.JH DataLab소개
 if option == "JH Data Lab 소개":
-    visitor += 1
     history = [
     "JH DataLab은...",
     ":seedling: 데이터 분석 전문 서비스(Service)를 제공합니다.",
