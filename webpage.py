@@ -79,8 +79,8 @@ if option == "JH Data Lab 소개":
     with open("visitors_information.csv", mode = "r") as file:
         lines = file.readlines()
         visitors = len(lines)
-        now = lines[visitors - 1][0:18]
-    st.write("{} 현재 누적 방문자수:{}명".format(now, visitors - 1))
+        now = lines[visitors - 1][0:16]
+    st.write("**:green[{} 현재 누적 방문자수:{}명]**".format(now, visitors - 1))
     
     
 
