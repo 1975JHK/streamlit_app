@@ -89,7 +89,7 @@ if option == "예제1:Korean Body Shape":
         # plt.gca().set_facecolor("#2F2E2E")
         st.pyplot(fig)
     else:
-        st.write("**한국인 체형 정보 (통계청, 2022년 자료)**")
+        st.subheader("**한국인 체형 정보 (통계청, 2022년 자료)**")
         st.dataframe(data = df_body, hide_index = True,
                      use_container_width = True)
         
@@ -118,7 +118,7 @@ if option == "예제2:Economic Indicators":
     colors = ["orange", "green", "steelblue"]
     
     if table_btn:
-        st.write("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
+        st.subheader("**한국 가계 경제 지표 (한국은행, 2022~2024년 자료)**")
         st.dataframe(data = df, hide_index = True,
                      width = 600, height = 550,
                      column_config={"year":st.column_config.NumberColumn(format="%d")})
@@ -126,7 +126,7 @@ if option == "예제2:Economic Indicators":
     elif graph_btn:
         fig = plt.figure(figsize = (8, 6))
         # fig.set_facecolor("#2F2E2E")
-        st.write("**월별 가계 경제 지표 추이 (한국은행, 2022~2024년 자료)**")
+        st.subheader("**월별 가계 경제 지표 추이 (한국은행, 2022~2024년 자료)**")
         for i, name in enumerate(col_names[1:4]):
             plt.plot(df["Month"], df[name], marker = "o",
                     color = colors[i], label = name, markersize = 5.0,
