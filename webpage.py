@@ -75,6 +75,7 @@ if option == "JH Data Lab 소개":
     image = Image.open("good_logo.jpg")
     con.image(image, use_column_width = True)
     visitors = counting_visitors
+    st.write(visitors)
     st.write("당신은 이 Web App의 {}번째 방문자입니다!".format(visitors))
 
 # 6.한국인 체형
