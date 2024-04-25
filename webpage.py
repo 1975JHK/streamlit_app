@@ -44,7 +44,7 @@ def counting_visitors():
         lines = file.readlines()
         num_visitors = len(lines)
     return num_visitors
-    st.write(lines)
+
     
 # 4.sidebar 설계
 with st.sidebar:
