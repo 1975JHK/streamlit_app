@@ -74,7 +74,7 @@ if option == "JH Data Lab 소개":
         con.write("\n")
         time.sleep(1.5)
     image = Image.open("good_logo.jpg")
-    con.image(image, use_column_width = True)
+    con.image(image, use_container_width = True)
     
     with open("visitors_information.csv", mode = "r") as file:
         lines = file.readlines()
