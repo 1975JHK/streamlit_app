@@ -35,9 +35,9 @@ class Weather:
                 # 기상청 RSS URL(주소)에서 html 가져오기
             response = requests.get(url)
             # 읽어온 html에서 하늘상태/기온/습도만 추출하기
-            wfor = re.findall("<wfKor>(.+)</wfKor>", response.text)[0]
-            temp = re.findall("<temp>(.+)</temp>", response.text)[0]
-            humi = re.findall("<reh>(.+)</reh>", response.text)[0]
+            wfor = re.findall("<wfKor>(.+)</wfKor>", response.text)[1]
+            temp = re.findall("<temp>(.+)</temp>", response.text)[1]
+            humi = re.findall("<reh>(.+)</reh>", response.text)[1]
             # 날씨 정보 저장하기 
             self.skies.append(wfor)
             self.temps.append(float(temp))
