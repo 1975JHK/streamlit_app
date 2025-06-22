@@ -12,6 +12,7 @@ import time, requests, re
 from scipy.stats import norm
 import requests
 from bs4 import BeautifulSoup
+from zoneinfo import ZoneInfo
 import datetime
 from Weather import Weather
 from kiwipiepy import Kiwi
@@ -190,7 +191,7 @@ if option == "예제3:RealTime Weather":
         wt = Weather()
         df = wt.real_time_weather()
         df.to_csv("real_time_weather.csv")
-    now = dt.datetime.now().strftime("%y/%m/%d %H:%M")
+    now = dt.datetime.now(ZoneInfo("Asia/Seoul")).strftime("%y/%m/%d %H:%M")
     df = pd.read_csv("real_time_weather.csv")
     df = df.iloc[0:, 1:]
     if graph_btn:
@@ -337,7 +338,7 @@ if option == "예제5:Newspaper Crawling":
     # 4.뉴스 기사 크롤링 함수
     def naver_news():                   # 함수정의 : 함수명 naver_news
         # part1. 네이버에서 뉴스 기사 스크랩핑
-        now = datetime.datetime.now()   # 현재 날짜와 시각 객체 now 생성
+        now = datetime.datetime.now(ZoneInfo("Asia/Seoul"))   # 현재 날짜와 시각 객체 now 생성
         date = now.strftime("%Y%m%d")   # 날짜와 시각 형식을 "년/월/일"로 전환
         ## 뉴스 크롤링하려는 사이트 주소를 url에 입력
         url = "https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=001&listType=title&date={}".format(date)
