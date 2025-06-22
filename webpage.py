@@ -399,14 +399,17 @@ if option == "예제5:Newspaper Crawling":
         if button3:
             df = st.session_state["df"]
             kiwi = Kiwi()
+            words = []
             text = " ".join(df["Articles"].dropna())
             tokens = kiwi.tokenize(text)
-            nouns = [token.form for token in tokens if token.tag.startswith('NN')] 
-            filtered_words = [word for word in nouns if len(word) > 1]
-            word_freq = Counter(filtered_words)
+            for sentence in df['Articles'].dropna():
+                tokens = kiwi.tokenize(sentence)
+                nouns = [token.form for token in tokens if token.tag.startswith('NN')]  # 명사만 추출
+                words.extend([w for w in nouns if len(w) > 1])
+            word_freq = Counter(words)
             wordclound = WordCloud(font_path="C:/Windows/Fonts/malgun.ttf",
                                 width = 800, height = 400, background_color="white")\
-                        .generate_from_frequencies(word_freq)
+                                .generate_from_frequencies(word_freq)
             fig = plt.figure()
             plt.imshow(wordclound, interpolation="bilinear")
             plt.axis("off")
