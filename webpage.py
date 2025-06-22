@@ -331,7 +331,7 @@ if option == "예제5:Newspaper Crawling":
     # 3.페이지 타이틀 및 서브 타이틀
     st.title("네이버 뉴스 크롤링")      # 웹페이지의 타이틀
     st.header("실시간 뉴스 Headline 살펴보기") # 웹페이지의 헤더
-    now = datetime.datetime.now().strftime("%y/%m/%d %H:%M") # 현재 날짜와 시각
+    now = datetime.datetime.now(ZoneInfo("Asia/Seoul")).strftime("%y/%m/%d %H:%M") # 현재 날짜와 시각
     st.subheader("날짜:{}".format(now)) # 웹페이지 서브헤더에 날짜와 시각 출력하기
     st.markdown("---")                  # 경계선 생성
 
