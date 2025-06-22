@@ -1,3 +1,5 @@
+# Updated on 22 June, 2025
+# Written by Robin Kim
 # 1.필요한 라이브러리 호출
 import streamlit as st
 import pandas as pd
@@ -328,18 +330,18 @@ if option == "예제4:Process Capability":
 #--------------------------------------------------------------#       
 # 10. Newspaper Crawling
 if option == "예제5:Newspaper Crawling":
-    # 3.페이지 타이틀 및 서브 타이틀
-    st.title("네이버 뉴스 크롤링")      # 웹페이지의 타이틀
+    # 10-1.페이지 타이틀 및 서브 타이틀
+    st.title("네이버 뉴스 크롤링")             # 웹페이지의 타이틀
     st.header("실시간 뉴스 Headline 살펴보기") # 웹페이지의 헤더
     now = datetime.datetime.now(ZoneInfo("Asia/Seoul")).strftime("%y/%m/%d %H:%M") # 현재 날짜와 시각
     st.subheader("날짜:{}".format(now)) # 웹페이지 서브헤더에 날짜와 시각 출력하기
     st.markdown("---")                  # 경계선 생성
 
-    # 4.뉴스 기사 크롤링 함수
-    def naver_news():                   # 함수정의 : 함수명 naver_news
+    # 10-2.뉴스 기사 크롤링 함수
+    def naver_news():                                         # 함수정의 : 함수명 naver_news
         # part1. 네이버에서 뉴스 기사 스크랩핑
         now = datetime.datetime.now(ZoneInfo("Asia/Seoul"))   # 현재 날짜와 시각 객체 now 생성
-        date = now.strftime("%Y%m%d")   # 날짜와 시각 형식을 "년/월/일"로 전환
+        date = now.strftime("%Y%m%d")                         # 날짜와 시각 형식을 "년/월/일"로 전환
         ## 뉴스 크롤링하려는 사이트 주소를 url에 입력
         url = "https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=001&listType=title&date={}".format(date)
         ## 크롤링 대상 사이트에서 일정한 형식으로 크롤링을 위해 user-agent생성
@@ -371,19 +373,19 @@ if option == "예제5:Newspaper Crawling":
         return df                                       # 데이터 프레임을 반환
 
 
-    # 5.Page Layout설계
+    # 10-3.Page Layout설계
     col1, col2 = st.columns([2, 8])                     # 페이지 Layout를 2개의 Column으로 분할
 
-    # 6.col1 설계                       
+    # 10-4.col1 설계                       
     with col1:                                          
         button1 = st.button(label = "뉴스 크롤링",      # button1 생성 : 레이블("뉴스 크롤링")
                             use_container_width = True)
         button2 = st.button(label = "뉴스 보기",        # button2 생성 : 레이블("뉴스 보기")
                             use_container_width = True)
-        button3 = st.button(label = "워드 클라우드",     # button3 생성 : 레이블("워드 클라우드")
+        button3 = st.button(label = "워드 클라우드",    # button3 생성 : 레이블("워드 클라우드")
                             use_container_width=True)
 
-    # 7.col2 설계
+    # 10-5.col2 설계
     with col2:
         if button1:                                     # button1을 누르면
             df = naver_news()                           # naver_news()함수 실행하여 df를 반환받음
@@ -392,8 +394,8 @@ if option == "예제5:Newspaper Crawling":
         if button2:                                     # button2를 누르면
             if "df" in st.session_state:
                 st.dataframe(data = st.session_state["df"],                     # 데이터 프레임 생성
-                            use_container_width = True,    # 데이터는 df를 사용
-                            hide_index = True)             # 폭은 현재 컨테이너 넓이 적용, 인덱스는 생략
+                            use_container_width = True, # 데이터는 df를 사용
+                            hide_index = True)          # 폭은 현재 컨테이너 넓이 적용, 인덱스는 생략
             else:
                 st.warning("[뉴스크롤링] 버튼을 눌러서 뉴스 데이터를 호출하세요!")
         
