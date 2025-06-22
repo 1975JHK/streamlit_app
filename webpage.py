@@ -407,7 +407,7 @@ if option == "예제5:Newspaper Crawling":
                 nouns = [token.form for token in tokens if token.tag.startswith('NN')]  # 명사만 추출
                 words.extend([w for w in nouns if len(w) > 1])
             word_freq = Counter(words)
-            wordclound = WordCloud(font_path="C:/Windows/Fonts/malgun.ttf",
+            wordclound = WordCloud(font_path="NanumGothic.ttf",
                                 width = 800, height = 400, background_color="white")\
                                 .generate_from_frequencies(word_freq)
             fig = plt.figure()
