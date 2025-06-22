@@ -10,10 +10,13 @@ import datetime as dt
 from PIL import Image
 import time, requests, re
 from scipy.stats import norm
+import requests
+from bs4 import BeautifulSoup
+import datetime
 from Weather import Weather
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix
+from konlpy.tag import Okt
+from wordcloud import WordCloud
+from collections import Counter
 import seaborn as sns
 
 # 2.시각화 기본 설정
@@ -54,7 +57,7 @@ with st.sidebar:
                                      "예제2:Economic Indicators",
                                      "예제3:RealTime Weather",
                                      "예제4:Process Capability",
-                                     "예제5:Vital Few Xs 선택"])
+                                     "예제5:Newspaper Crawling"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
 
@@ -322,70 +325,90 @@ if option == "예제4:Process Capability":
         st.markdown(":green[공정 능력 산출 버튼]을 클릭하세요")
             
 #--------------------------------------------------------------#       
-# 10. Vital Few Xs 선정의 효과
-if option == "예제5:Vital Few Xs 선택":
-    # Importing the dataset
-    raw = pd.read_csv("iris.csv")
-    df = raw.copy()
-    names = ["setosa", "versicolor", "virginica"]
-    colors = ["#8db600", "#F28500", "#4682b4"]
-    for i, name in enumerate(names):
-        for j in range(df.shape[0]):
-            if df["species"][j] == name:
-                df["species"][j] = colors[i]
-    
-    # Select Variables with selectbox
-    variables = df.columns
-    with st.sidebar:
-        st.write("---")
-        st.write("**X/Y변수, Point Size 선택**")
-        xvar = st.selectbox(label = "X Variable:",
-                            options = variables[:4], index = 0)
-        yvar = st.selectbox(label = "Y Variable",
-                            options = variables[:4], index = 1)
-        size = st.slider(label = "Point Size:", min_value = 10,
-                         max_value = 100, value = 50, step = 5)
-        start = st.button(label = "분류모델 작동")
-        
-    # Display graph with scatterplot
-    locs = ["left", "right", "top", "bottom"]
-    fig = plt.figure(figsize = (8, 6), dpi = 120)
-    plt.title("Species Classification Visualization with IRIS Features",
-              fontdict = {"weight":"bold", "size":15})
-    plt.scatter(x = df[xvar], y = df[yvar], marker = "o",
-                color = df["species"], s = size)
-    plt.xlabel(xvar, fontdict = {"weight":"bold", "size":13})
-    plt.ylabel(yvar, fontdict = {"weight":"bold", "size":13})
-    for loc in locs:
-        plt.gca().spines[loc].set_visible(False)
-    plt.grid(True)
-    st.pyplot(fig)
-    
-    # RandomForest로 분류하기
-    trainx, testx, trainy, testy = train_test_split(df.iloc[:, :4],
-                                                    df.iloc[:, 4],
-                                                    test_size = 0.2)
-    classifier = RandomForestClassifier(n_estimators=100)
-    classifier.fit(X = trainx.loc[:, [xvar, yvar]],
-                   y = trainy)
-    predy = classifier.predict(X = testx.loc[:, [xvar, yvar]])
-    score = accuracy_score(testy, predy)
-    print("Random Forest 분류모델 정확도:{:.1f}%".format(score*100))
+# 10. Newspaper Crawling
+if option == "예제5:Newspaper Crawling":
+    # 3.페이지 타이틀 및 서브 타이틀
+    st.title("네이버 뉴스 크롤링")      # 웹페이지의 타이틀
+    st.header("실시간 뉴스 Headline 살펴보기") # 웹페이지의 헤더
+    now = datetime.datetime.now().strftime("%y/%m/%d %H:%M") # 현재 날짜와 시각
+    st.subheader("날짜:{}".format(now)) # 웹페이지 서브헤더에 날짜와 시각 출력하기
+    st.markdown("---")                  # 경계선 생성
 
-    # 분류결과 Visualization
-    if start:
-        cm = confusion_matrix(testy, predy)
-        st.markdown("**스크롤바를 내려서 아래의 Confusion Matrix를 보세요!**")
-        st.write("---")
-        fig = plt.figure(figsize = (8, 6), dpi = 120)
-        plt.title("RandomForest Classification Accuracy:{:.1f}%".format(score*100),
-                   fontdict = {"weight":"bold", "size":13})
-        sns.heatmap(data = cm, cmap = "Blues",
-                    annot = True, xticklabels = names, yticklabels = names)
-        plt.xlabel("True Value",
-                   fontdict = {"weight":"bold", "size":13})
-        plt.ylabel("Predicted Value",
-                   fontdict = {"weight":"bold", "size":13})
-        for loc in locs:
-            plt.gca().spines[loc].set_visible(False)
-        st.pyplot(fig)
+    # 4.뉴스 기사 크롤링 함수
+    def naver_news():                   # 함수정의 : 함수명 naver_news
+        # part1. 네이버에서 뉴스 기사 스크랩핑
+        now = datetime.datetime.now()   # 현재 날짜와 시각 객체 now 생성
+        date = now.strftime("%Y%m%d")   # 날짜와 시각 형식을 "년/월/일"로 전환
+        ## 뉴스 크롤링하려는 사이트 주소를 url에 입력
+        url = "https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=001&listType=title&date={}".format(date)
+        ## 크롤링 대상 사이트에서 일정한 형식으로 크롤링을 위해 user-agent생성
+        headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"}
+        response = requests.get(url, headers = headers) # url에 웹페이지 code를 요청
+        html = response.text                            # 웹페이지 code중에서 텍스트만 선별
+        soup = BeautifulSoup(html, "html.parser")       # html parser로 html만 soup에 반환
+
+        ## HTML구조에서 뉴스 기사가 있는 곳까지 경로를 추종하여 a태그 하위의 html을 titles에 반환
+        titles = soup.select("#main_content > div.list_body.newsflash_body > ul > li > a")
+        news_titles = []                                # 빈 리스트 news_titles생성
+        for title in titles:                            # titles에서 title로 구성요소 전달                   
+            news_titles.append(title.text)              # title의 텍스텍 요소를 news_titles저장
+
+        # part2.동일한 뉴스 기사 제거 : 뉴스 정제
+        news_titles = list(set(news_titles))            # 중복되는 news titles를 제거
+        index = []                                      # 빈 리스트 index 생성
+        news = []                                       # 빈 리스트 news 생성
+        
+        # part3.정제된 최종 뉴스와 인덱스 빈 리스트에 저장
+        for i, article in enumerate(news_titles):       # news_titles에 구성요소를 aritcle에 전달
+            index.append(i+1)                           # 인덱스i는 리스트index에 추가
+            news.append(article)                        # 기사article은 리스트 article에 추가
+            
+        # part4.데이터 프레임 생성
+        df = pd.DataFrame({
+            "No.":index, "Articles":news})              # 리스트 index와 article로 데이터프레임 생성
+        
+        return df                                       # 데이터 프레임을 반환
+
+
+    # 5.Page Layout설계
+    col1, col2 = st.columns([2, 8])                     # 페이지 Layout를 2개의 Column으로 분할
+
+    # 6.col1 설계                       
+    with col1:                                          
+        button1 = st.button(label = "뉴스 크롤링",      # button1 생성 : 레이블("뉴스 크롤링")
+                            use_container_width = True)
+        button2 = st.button(label = "뉴스 보기",        # button2 생성 : 레이블("뉴스 보기")
+                            use_container_width = True)
+        button3 = st.button(label = "워드 클라우드",     # button3 생성 : 레이블("워드 클라우드")
+                            use_container_width=True)
+
+    # 7.col2 설계
+    with col2:
+        if button1:                                     # button1을 누르면
+            df = naver_news()                           # naver_news()함수 실행하여 df를 반환받음
+            st.session_state["df"] = df
+            
+        if button2:                                     # button2를 누르면
+            if "df" in st.session_state:
+                st.dataframe(data = st.session_state["df"],                     # 데이터 프레임 생성
+                            use_container_width = True,    # 데이터는 df를 사용
+                            hide_index = True)             # 폭은 현재 컨테이너 넓이 적용, 인덱스는 생략
+            else:
+                st.warning("[뉴스크롤링] 버튼을 눌러서 뉴스 데이터를 호출하세요!")
+        
+        if button3:
+            df = st.session_state["df"]
+            okt = Okt()
+            text = " ".join(df["Articles"].dropna())
+            nouns = okt.nouns(text)
+            print(nouns)
+            filtered_words = [word for word in nouns if len(word) > 1]
+            word_freq = Counter(filtered_words)
+            wordclound = WordCloud(font_path="C:/Windows/Fonts/malgun.ttf",
+                                width = 800, height = 400, background_color="white")\
+                        .generate_from_frequencies(word_freq)
+            fig = plt.figure()
+            plt.imshow(wordclound, interpolation="bilinear")
+            plt.axis("off")
+            # plt.title("주요 뉴스 WordCloud")
+            st.pyplot(fig)
