@@ -14,7 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 from Weather import Weather
-from konlpy.tag import Okt
+from kiwipiepy import Kiwi
 from wordcloud import WordCloud
 from collections import Counter
 import seaborn as sns
@@ -398,10 +398,10 @@ if option == "예제5:Newspaper Crawling":
         
         if button3:
             df = st.session_state["df"]
-            okt = Okt()
+            kiwi = Kiwi()
             text = " ".join(df["Articles"].dropna())
-            nouns = okt.nouns(text)
-            print(nouns)
+            tokens = kiwi.tokenize(text)
+            nouns = [token.form for token in tokens if token.tag.startswith('NN')] 
             filtered_words = [word for word in nouns if len(word) > 1]
             word_freq = Counter(filtered_words)
             wordclound = WordCloud(font_path="C:/Windows/Fonts/malgun.ttf",
