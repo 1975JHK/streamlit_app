@@ -11,3 +11,4 @@ scikit-learn
 beautifulsoup4
 konlpy
 wordcloud
+kiwipiepy
