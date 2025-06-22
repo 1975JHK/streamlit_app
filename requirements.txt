@@ -8,3 +8,4 @@ pillow
 requests
 scipy
 scikit-learn
+beautifulsoup4
