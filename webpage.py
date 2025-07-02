@@ -436,6 +436,7 @@ if option == "예제6:Beautiful Korea":
     # UI
     st.title("한국의 풍경")
     st.write("총 이미지 수: ", len(image_files))
+    st.write("모든 이미지는 pixabay에서 다운로드하였음을 알려드립니다.")
     
     
     # 현재 이미지 표시
