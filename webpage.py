@@ -1,10 +1,10 @@
-# Updated on 22 June, 2025
+# Updated on 2 July, 2025
 # Written by Robin Kim
 # 1.필요한 라이브러리 호출
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib
+import matplotlib, os
 from matplotlib import font_manager, rc
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -60,7 +60,8 @@ with st.sidebar:
                                      "예제2:Economic Indicators",
                                      "예제3:RealTime Weather",
                                      "예제4:Process Capability",
-                                     "예제5:Newspaper Crawling"])
+                                     "예제5:Newspaper Crawling",
+                                     "예제6:Beautiful Korea"])
     table_btn = st.button(label = "데이터 테이블")
     graph_btn = st.button(label = "데이터 시각화")
 
@@ -418,3 +419,47 @@ if option == "예제5:Newspaper Crawling":
             plt.axis("off")
             # plt.title("주요 뉴스 WordCloud")
             st.pyplot(fig)
+
+            
+#--------------------------------------------------------------# 
+# 11. Image 살펴보기
+if option == "예제6:Beautiful Korea":
+    # 1.이미지 폴더 경로 설정
+    IMAGE_FOLDER = r"C:\Users\npain\Desktop\Python\DataAnalysis\images10/"  # 'images' 폴더 안에 이미지 파일들을 저장하세요
+    image_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('png', 'jpg', 'jpeg', 'gif'))]
+    image_files.sort()
+    
+    # 세션 상태로 이미지 인덱스 저장
+    if 'img_index' not in st.session_state:
+        st.session_state.img_index = 0
+    
+    # UI
+    st.title("한국의 풍경")
+    st.write("총 이미지 수: ", len(image_files))
+    
+    
+    # 현재 이미지 표시
+    if image_files:
+        loaded_image = Image.open(os.path.join(IMAGE_FOLDER, image_files[st.session_state.img_index]))
+        current_image = loaded_image.resize((1280, 700))
+        st.image(current_image, caption=image_files[st.session_state.img_index], use_container_width=True)
+    
+        # 버튼 클릭 플래그 초기화
+        if 'go_next' not in st.session_state:
+            st.session_state.go_next = False
+        if 'go_prev' not in st.session_state:
+            st.session_state.go_prev = False
+    
+        # 버튼 배치
+        col1, col2, col3 = st.columns([1, 6, 1])
+        with col1:
+            if st.button("◀ 이전"):
+                if st.session_state.img_index > 0:
+                    st.session_state.img_index -= 1
+        with col3:
+            if st.button("다음 ▶"):
+                if st.session_state.img_index < len(image_files) - 1:
+                    st.session_state.img_index += 1
+    else:
+        st.warning("이미지가 없습니다. 'images' 폴더에 이미지를 넣어주세요.")
+    
