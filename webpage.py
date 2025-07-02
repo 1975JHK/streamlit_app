@@ -425,7 +425,7 @@ if option == "예제5:Newspaper Crawling":
 # 11. Image 살펴보기
 if option == "예제6:Beautiful Korea":
     # 1.이미지 폴더 경로 설정
-    IMAGE_FOLDER = r"C:\Users\npain\Desktop\Python\DataAnalysis\images10/"  # 'images' 폴더 안에 이미지 파일들을 저장하세요
+    IMAGE_FOLDER = "images"  # 'images' 폴더 안에 이미지 파일들을 저장하세요
     image_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('png', 'jpg', 'jpeg', 'gif'))]
     image_files.sort()
     
